@@ -33,7 +33,8 @@ The script logic will be used in one of my friend's paid tool with some other ca
     ./frogy.sh.x
     ```
 + **Output**
-    ```Output will be saved within output/ORG/ORG.master file. 
+    ```
+    Output will be saved within output/ORG/ORG.master file. 
 if telsa.com is your target then output file will be output/telsa/tesla.master
     ```
     
