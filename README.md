@@ -7,14 +7,14 @@ The script logic will be used in one of my friend's paid tool with some other ca
 <img src="https://user-images.githubusercontent.com/8291014/108609113-9de85c80-73c3-11eb-8836-aa2e947063e1.png" alt="Frogy" title="Frogy" height="600" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
-+ **Tools used - You must need to install these tools to use this script**<br/>
++ **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
 
-  + [SubFinder](https://github.com/projectdiscovery/subfinder) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'subfinder' only)
-  + [Assetfinder](https://github.com/tomnomnom/assetfinder) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'assetfinder' only)
-  + [Find-domain](https://github.com/Findomain/Findomain) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'findomain-linux' only)
-  + [httprobe](https://github.com/tomnomnom/httprobe) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'httprobe' only)
-  + [anew](https://github.com/tomnomnom/anew) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'anew' only)
-  + [massdns](https://github.com/blechschmidt/massdns) - Copy the executable binary into /usr/bin folder. (Ensure the binary name must be 'massdns' only)
+  + [SubFinder](https://github.com/projectdiscovery/subfinder) - Ensure the binary name must be 'subfinder' only
+  + [Assetfinder](https://github.com/tomnomnom/assetfinder) - Ensure the binary name must be 'assetfinder' only
+  + [Find-domain](https://github.com/Findomain/Findomain) - Ensure the binary name must be 'findomain-linux' only
+  + [httprobe](https://github.com/tomnomnom/httprobe) - Ensure the binary name must be 'httprobe' only
+  + [anew](https://github.com/tomnomnom/anew) - Ensure the binary name must be 'anew' only
+  + [massdns](https://github.com/blechschmidt/massdns) - Ensure the binary name must be 'massdns' only
   
   You might require to install WHOIS and JQ depending upon your enviroment. You can install them using the following commands:
    ```sh
