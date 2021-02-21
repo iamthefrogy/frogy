@@ -39,7 +39,6 @@ The script logic will be used in one of my friend's paid tool with some other ca
 - ✅  ~~Add scope for extened subdomain enum scope~~
 - ✅  Eliminate false positives. Currently around 7% to 10% false positives are there.
 - ✅  Subdomain discovery through alterations and permutations (Altdns integration)
-- 
 #### Thanks to the authors of the tools used in this script.
 
 **Warning:** This is just a research project. Kindly use it with caution and at your own risk.
