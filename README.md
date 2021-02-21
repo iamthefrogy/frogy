@@ -35,7 +35,7 @@ The script logic will be used in one of my friend's paid tool with some other ca
 + **Output**
     ```
     Output will be saved within output/ORG/ORG.master file. 
-if telsa.com is your target then output file will be output/telsa/tesla.master
+    If telsa.com is your target then output file will be output/telsa/tesla.master
     ```
     
 **TODO**
