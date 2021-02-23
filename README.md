@@ -44,7 +44,6 @@ The script logic will be used in one of my friend's paid tool with some other ca
 - ✅  ~~Add dnscan for extened subdomain enum scope~~
 - ✅  ~~Add scope for extened subdomain enum scope~~
 - Eliminate false positives. Currently around 7% to 10% false positives are there.
-- Find XSS using gospider
 
 #### Thanks to the authors of the tools used in this script.
 
