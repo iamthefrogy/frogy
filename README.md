@@ -44,6 +44,8 @@ The script logic will be used in one of my friend's paid tool with some other ca
 - ✅  ~~Add dnscan for extened subdomain enum scope~~
 - ✅  ~~Add scope for extened subdomain enum scope~~
 - Eliminate false positives. Currently around 2% to 4% false positives are there.
+- ✅  ~~Removed resolving part~~
+- ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 
 #### Thanks to the authors of the tools used in this script.
 
