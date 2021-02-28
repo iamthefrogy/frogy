@@ -4,7 +4,7 @@ Using the combination of different subdomain tools it tries to identify more sub
 <img src="https://user-images.githubusercontent.com/8291014/108618620-7327f380-7417-11eb-8f5a-2b462a820502.png" alt="Frogy" title="Frogy" height="90"/><br/>
 The script logic will be used in one of my friend's paid tool with some other capabilities. Hence, I am not planning to open-source it for a couple of months. After June, I have plans to open-source it. I would suggest, run this in your sandbox environment if you don't trust the encrypted code, and you can also monitor traffic if you want. I have no intentions to steal any of your system's data. Kindly run it at your own concern and risk. I won't be responsible for any sort of liabilities.
 
-<img src="https://user-images.githubusercontent.com/8291014/108609113-9de85c80-73c3-11eb-8836-aa2e947063e1.png" alt="Frogy" title="Frogy" height="600" />
+<img src="https://user-images.githubusercontent.com/8291014/109435117-b7ffeb80-7a10-11eb-9324-3daa31739f58.png" alt="Frogy" title="Frogy" height="600" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
