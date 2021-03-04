@@ -44,4 +44,9 @@ Using the combination of different subdomain tools it tries to identify more sub
 
 #### Thanks to the authors of the tools used in this script.
 
+#### I planned to used it in one of the paid tools but soon realised that the tools I am using in this script are restricted for commercial license. I didn't check it in the first place (my bad). So Removed encrypted script, scrapped paid tool project, open-sourced this script. Script is very simple though. I may update it occassionally.
+
+Initial repo created - A few weeks back below date.
+Date - 4 March 2019, Open-sourced
+
 **Warning:** This is just a research project. Kindly use it with caution and at your own risk.
