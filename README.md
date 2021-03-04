@@ -1,8 +1,5 @@
 # Frogy's Subdomain Enumeraton - It's not yet another Subdomain Enumeration tool
 Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/><br/>
-**WARNING**<br/><br/>
-<img src="https://user-images.githubusercontent.com/8291014/108618620-7327f380-7417-11eb-8f5a-2b462a820502.png" alt="Frogy" title="Frogy" height="90"/><br/>
-The script logic will be used in one of my friend's paid tool with some other capabilities. Hence, I am not planning to open-source it for a couple of months. After June, I have plans to open-source it. I would suggest, run this in your sandbox environment if you don't trust the encrypted code, and you can also monitor traffic if you want. I have no intentions to steal any of your system's data. Kindly run it at your own concern and risk. I won't be responsible for any sort of liabilities.
 
 <img src="https://user-images.githubusercontent.com/8291014/109435117-b7ffeb80-7a10-11eb-9324-3daa31739f58.png" alt="Frogy" title="Frogy" height="600" />
 
