@@ -1,4 +1,4 @@
-# Frogy's Subdomain Enumeraton - It's not yet another Subdomain Enumeration tool
+# Frogy
 Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/><br/>
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
