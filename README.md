@@ -1,6 +1,9 @@
 # Frogy - Subdomain enumeration
 Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/><br/>
 
++ **Logic**<br/>
+<img src="https://user-images.githubusercontent.com/8291014/110205963-f82cf700-7e72-11eb-9156-78f1d2e7a57a.png" alt="Frogy" title="Frogy" />
+
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
 
