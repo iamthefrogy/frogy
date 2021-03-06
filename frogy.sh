@@ -36,8 +36,8 @@ fi
 if [[ -d output/$org ]]
 then
         echo -e "\e[94mCreating $org directory in the 'output' folder...\e[0m"
-	rm -r output/$org
-	mkdir output/$org
+        rm -r output/$org
+        mkdir output/$org
 else
         echo -e "\e[94mCreating $org directory in the 'output' folder... \e[0m"
         mkdir output/$org
@@ -50,18 +50,18 @@ echo -e "\e[92mIdentifying Subdomains \e[0m"
 echo -n "Is this program is in CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-	wget -q "https://chaos-data.projectdiscovery.io/index.json" && cat index.json | grep $org | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
-	cat *.txt >> output/$org/chaos.txtls || true
-	rm index.json* || true
-	cat output/$org/chaos.txtls >> all.txtls || true
-	echo -e "\e[36mChaos count: \e[32m$(cat output/$org/chaos.txtls | anew | wc -l)\e[0m"
-	find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-	subfinder -dL subfinder.domains --silent -recursive >> output/$org/subfinder.txtls
-	rm subfinder.domains
-	cat output/$org/subfinder.txtls >> all.txtls
-	rm *.txt
+        wget -q "https://chaos-data.projectdiscovery.io/index.json" && cat index.json | grep $org | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
+        cat *.txt >> output/$org/chaos.txtls || true
+        rm index.json* || true
+        cat output/$org/chaos.txtls >> all.txtls || true
+        echo -e "\e[36mChaos count: \e[32m$(cat output/$org/chaos.txtls | anew | wc -l)\e[0m"
+        find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
+        subfinder -dL subfinder.domains --silent -recursive >> output/$org/subfinder.txtls
+        rm subfinder.domains
+        cat output/$org/subfinder.txtls >> all.txtls
+        rm *.txt
 else
-	subfinder -d $domain_name --silent >> output/$org/subfinder.txtls
+        subfinder -d $domain_name --silent >> output/$org/subfinder.txtls
         cat output/$org/subfinder.txtls >> all.txtls
 fi
 ############ Generating Wordlist  ##############
@@ -88,10 +88,10 @@ mv $org-wordlist.txt output/$org
 registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -iv ".(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*domain*|*DOMAIN*|*proxy*|*PROXY*|*PRIVACY*|*privacy*|*REDACTED*|*redacted*|*DNStination*|*WhoisGuard*)")
 if [ -z "$registrant" ]
 then
-	curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
 else
-	curl -s "https://crt.sh/?q="$registrant"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
-	curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
+        curl -s "https://crt.sh/?q="$registrant"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
 fi
 
 cat output/$org/whois.txtls >> all.txtls
@@ -117,17 +117,20 @@ cat output/$org/dnscan.txtls | grep $org | egrep -iv ".(DMARC|spf|=|[*])" | cut 
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$org/dnscan.txtls | anew | wc -l)\e[0m"
 
-awk -F\. '{print $(NF-1) FS $NF}' all.txtls | grep $org | anew >> final.txtls
+awk -F\. '{print $(NF-1) FS $NF}' all.txtls | anew >> final.txtls
 subfinder -dL final.txtls --silent >> output/$org/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$org/subfinder2.txtls | anew | wc -l)\e[0m"
 
 cat output/$org/subfinder2.txtls >> all.txtls
 
 rm final.txtls
+echo "www.$domain_name" >> all.txtls
+echo "$domain_name" >> all.txtls
 cat all.txtls | grep $org | anew >> $org.master
 mv $org.master output/$org/$org.master
 rm all.txtls
 echo -e "\e[93mTotal UNIQUE subdomains found: $(cat output/$org/$org.master | anew | wc -l)\e[0m"
-massdns -r resolvers.txtls -t A -o S output/$org/$org.master -w output/$org/livesubdomains.txtls &> /dev/null
-sed 's/A.*//' output/$org/livesubdomains.txtls | sed 's/CN.*//' | sed 's/\..$//' | anew >> output/$org/domains-resolved.txtls
-echo -e "\e[93mResolvable subdomains found: $(cat output/$org/domains-resolved.txtls | wc -l)\e[0m"
+
+echo -e "\e[94mGenerating live URLs...\e[0m"
+cat output/$org/$org.master | httpx --silent -ports 80,280,443,591,593,832,981,1965,2480,4444,4445,4567,5104,5800,5985,5986,7000,7002,8008,8042,8080,8088,8222,8243,8280,8281,8403,8448,8530,8531,8887,8888,9443,9981,11371,12043,12046,12443,16080,18091,18092 >> output/$org/liveurls.txtls
+echo -e "\e[93mCount of live websites: $(cat output/$org/liveurls.txtls | anew | wc -l)\e[0m"
