@@ -1,4 +1,8 @@
-# Frogy - Subdomain enumeration
+<h1 align="center">
+  <br>
+  <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy"></a>
+</h1>
+
 Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/><br/>
 
 + **Logic**<br/>
