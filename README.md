@@ -1,7 +1,7 @@
 <h1 align="center">
   <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy" height=230px></a>
   </h1>
-Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/>
+Using the combination of different subdomain tools it tries to identify more subdomains using combination of bruteforce and other techniques. <br/><br/>
 
 **Logic**<br/>
 <img src="https://user-images.githubusercontent.com/8291014/110205963-f82cf700-7e72-11eb-9156-78f1d2e7a57a.png" alt="Frogy" title="Frogy" />
