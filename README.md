@@ -9,13 +9,11 @@ Using the combination of different subdomain tools it tries to identify more sub
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
 
-  + [SubFinder](https://github.com/projectdiscovery/subfinder) - Ensure the binary name must be 'subfinder' only
-  + [Assetfinder](https://github.com/tomnomnom/assetfinder) - Ensure the binary name must be 'assetfinder' only
-  + [Find-domain](https://github.com/Findomain/Findomain) - Ensure the binary name must be 'findomain-linux' only
-  + [httprobe](https://github.com/tomnomnom/httprobe) - Ensure the binary name must be 'httprobe' only
-  + [anew](https://github.com/tomnomnom/anew) - Ensure the binary name must be 'anew' only
-  + [massdns](https://github.com/blechschmidt/massdns) - Ensure the binary name must be 'massdns' only
-  
+  + [SubFinder](https://github.com/projectdiscovery/subfinder)
+  + [Find-domain](https://github.com/Findomain/Findomain)
+  + [httpx](https://github.com/projectdiscovery/httpx)
+  + [anew](https://github.com/tomnomnom/anew)
+    
   You might require to install WHOIS and JQ depending upon your enviroment. You can install them using the following commands:
    ```sh
     apt install jq
@@ -48,11 +46,13 @@ Using the combination of different subdomain tools it tries to identify more sub
 - ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 
 #### Thanks to the authors of the tools used in this script.
+For crt.sh https://github.com/HackerUniverse/Reconcobra/blob/HackerUniverse-patch-1/crt.sh, this logic has been used.
 
 #### I planned to used it in one of the paid tools but soon realised that the tools I am using in this script are restricted for commercial license. I didn't check it in the first place (my bad). So Removed encrypted script, scrapped paid tool project, open-sourced this script. Script is very simple though. I may update it occassionally.
 
 Initial repo created - A few weeks back below date.
 Date - 4 March 2019, Open-sourced
+Date - 19 March 2021, Major changes
 
 **Warning:** This is just a research project. Kindly use it with caution and at your own risk. </br>
 Logo credit - www.designevo.com
