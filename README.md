@@ -43,7 +43,7 @@ Using the combination of different subdomain tools it tries to identify more sub
 - ✅  ~~Resolving subdomains using Massdns~~
 - ✅  ~~Add dnscan for extened subdomain enum scope~~
 - ✅  ~~Add scope for extened subdomain enum scope~~
-- Eliminate false positives. Currently around 2% to 4% false positives are there.
+- ✅  ~~Eliminate false positives. Currently around 2% to 4% false positives are there.~~
 - ✅  ~~Removed resolving part~~
 - ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 
