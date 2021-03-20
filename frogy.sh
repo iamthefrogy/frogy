@@ -85,18 +85,6 @@ cat temp_wordlist.txt | anew | sed '/^$/d' | sed 's/\*\.//g' | grep -v " " | gre
 rm temp_wordlist.txt
 mv $org-wordlist.txt output/$org
 
-registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -iv ".(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*domain*|*DOMAIN*|*proxy*|*PROXY*|*PRIVACY*|*privacy*|*REDACTED*|*redacted*|*DNStination*|*WhoisGuard*)")
-if [ -z "$registrant" ]
-then
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
-else
-        curl -s "https://crt.sh/?q="$registrant"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
-fi
-
-cat output/$org/whois.txtls >> all.txtls
-echo -e "\e[36mCertificate search count: \e[32m$(cat output/$org/whois.txtls | anew | wc -l)\e[0m"
-
 python3 sublister/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
 if [[ -e sublister_output.txt ]]
 then
