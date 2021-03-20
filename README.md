@@ -53,5 +53,5 @@ Initial repo created - A few weeks back below date.
 Date - 4 March 2019, Open-sourced
 Date - 19 March 2021, Major changes
 
-**Warning:** This is just a research project. Kindly use it with caution and at your own risk. </br>
+Warning/Disclaimer: Read the detailed disclaimer at my blog - https://github.com/iamthefrogy/Disclaimer-Warning/blob/main/README.md <br/>
 Logo credit - www.designevo.com
