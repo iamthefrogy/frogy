@@ -44,11 +44,10 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  ~~Eliminate false positives. Currently around 2% to 4% false positives are there.~~
 - ✅  ~~Removed resolving part~~
 - ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
+-  Search for assets in CHAOS for organization names having space.
 
 #### Thanks to the authors of the tools used in this script.
 For crt.sh https://github.com/HackerUniverse/Reconcobra/blob/HackerUniverse-patch-1/crt.sh, this logic has been used.
-
-#### I planned to used it in one of the paid tools but soon realised that the tools I am using in this script are restricted for commercial license. I didn't check it in the first place (my bad). So Removed encrypted script, scrapped paid tool project, open-sourced this script. Script is very simple though. I may update it occassionally.
 
 Initial repo created - A few weeks back below date.
 Date - 4 March 2019, Open-sourced
