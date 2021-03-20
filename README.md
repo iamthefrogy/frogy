@@ -45,6 +45,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  ~~Removed resolving part~~
 - ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 -  Search for assets in CHAOS for organization names having space.
+-  Add dnsenum for more extended support.
 
 #### Thanks to the authors of the tools used in this script.
 For crt.sh https://github.com/HackerUniverse/Reconcobra/blob/HackerUniverse-patch-1/crt.sh, this logic has been used.
