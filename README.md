@@ -33,7 +33,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 + **Output**
     ```
     Output will be saved within output/ORG/ORG.master file. 
-    If telsa.com is your target then output file will be output/telsa/tesla.master
+    If telsa.com is your target then output file Of all the subdomains will be output/telsa/tesla.master and all the TLDs will be recorded in the output/tesla/tld.txtls file.
     ```
     
 **TODO**
