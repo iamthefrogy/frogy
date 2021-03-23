@@ -50,9 +50,9 @@ Using the combination of different subdomain enumeration tools and logic this sc
 #### Thanks to the authors of the tools used in this script.
 For crt.sh https://github.com/HackerUniverse/Reconcobra/blob/HackerUniverse-patch-1/crt.sh, this logic has been used.
 
-Initial repo created - A few weeks back below date.
-Date - 4 March 2019, Open-sourced
-Date - 19 March 2021, Major changes
+Initial repo created - A few weeks back below date.<br/>
+Date - 4 March 2019, Open-sourced<br/>
+Date - 19 March 2021, Major changes<br/>
 
 Warning/Disclaimer: Read the detailed disclaimer at my blog - https://github.com/iamthefrogy/Disclaimer-Warning/blob/main/README.md <br/>
 Logo credit - www.designevo.com
