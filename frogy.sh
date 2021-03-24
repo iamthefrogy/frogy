@@ -92,14 +92,12 @@ cat $DIR/crt.ids| while read line
 do
    curl -s https://crt.sh/?id=$line > $DIR/$line.txt
 done
-cat $DIR/* | grep -oP '(DNS)(.*?)(<BR>)' | cut -d ":" -f2 | cut -d "<" -f1 | sort -u >> output/$org/crt.txtls
+cat $DIR/* | grep -oP '(commonName)(.*?)(<BR>)' | cut -d "=" -f2 | cut -d ";" -f2 | sort -u | sed '/\./!d' | grep -v "*" | cut -d "<" -f1 | anew >> output/$org/crt.txtls
 sed -ie 's/*.//g' output/$org/crt.txtls
-#rm -r crt
 cat output/$org/crt.txtls >> all.txtls
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$org/crt.txtls | anew | wc -l)\e[0m"
-
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$org/crt.txtls | anew | wc -l)\e[0m"
-
+rm -r crt
 python3 sublister/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
 if [[ -e sublister_output.txt ]]
 then
@@ -120,13 +118,13 @@ cat output/$org/dnscan.txtls | grep $org | egrep -iv ".(DMARC|spf|=|[*])" | cut 
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$org/dnscan.txtls | anew | wc -l)\e[0m"
 
-grep -P "^.[^.]+\.[a-zA-Z]{3}$|^.[^.]+\.[a-zA-Z]{2}\.[a-zA-Z]{2}$" all.txtls | anew  >> tld.txtls
-subfinder -dL tld.txtls --silent >> output/$org/subfinder2.txtls
+grep -P "^.[^.]+\.[a-zA-Z]{3}$|^.[^.]+\.[a-zA-Z]{2}\.[a-zA-Z]{2}$" all.txtls | anew  >> tld.txt
+subfinder -dL tld.txt --silent >> output/$org/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$org/subfinder2.txtls | anew | wc -l)\e[0m"
 cat output/$org/subfinder2.txtls | grep "/" | cut -d "/" -f3 >> all.txtls
 cat output/$org/subfinder2.txtls | grep -v "/" >> all.txtls
 
-mv tld.txtls output/$org/
+mv tld.txt output/$org/
 echo "www.$domain_name" >> all.txtls
 echo "$domain_name" >> all.txtls
 cat all.txtls | anew | grep -v "*." >> $org.master
@@ -134,4 +132,4 @@ mv $org.master output/$org/$org.master
 sed -i 's/<br>/\n/g' output/$org/$org.master
 rm all.txtls
 echo -e "\e[93mTotal UNIQUE subdomains found: $(cat output/$org/$org.master | wc -l)\e[0m"
-echo -e "\e[93mTotal UNIQUE TLDs found: $(cat output/$org/tld.txtls | wc -l)\e[0m"
+echo -e "\e[93mTotal UNIQUE TLDs found: $(cat output/$org/tld.txt | wc -l)\e[0m"
