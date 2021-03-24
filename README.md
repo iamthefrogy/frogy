@@ -48,8 +48,6 @@ Using the combination of different subdomain enumeration tools and logic this sc
 -  Add dnsenum for more extended support.
 
 #### Thanks to the authors of the tools used in this script.
-For crt.sh https://github.com/HackerUniverse/Reconcobra/blob/HackerUniverse-patch-1/crt.sh, this logic has been used.
-
 Initial repo created - A few weeks back below date.<br/>
 Date - 4 March 2019, Open-sourced<br/>
 Date - 19 March 2021, Major changes<br/>
