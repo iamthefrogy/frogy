@@ -46,6 +46,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 -  Search for assets in CHAOS for organization names having space.
 -  Add dnsenum for more extended support.
+-  To run it on a weekly basis, I will add more checks to report 4 things - 1. Total unique subdomains 2. Total unqiue TLDs 3. Total new unique subdomains found on the date you run, 4. Total new unique TLDs found on the date you run. With these output, you can focus more on newly found domains and subdomains on a weekly or daily basis based on your cronjob.
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
