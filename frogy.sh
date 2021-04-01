@@ -84,7 +84,7 @@ cat temp_wordlist.txt | anew | sed '/^$/d' | sed 's/\*\.//g' | grep -v " " | gre
 rm temp_wordlist.txt
 mv $org-wordlist.txt output/$org
 
-registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -iv ".(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*domain*|*DOMAIN*|*proxy*|*PROXY*|*PRIVACY*|*privacy*|*REDACTED*|*redacted*|*DNStination*|*WhoisGuard*)")
+registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -iv ".(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)")
 if [ -z "$registrant" ]
 then
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].common_name" | sed 's/*.//g' | anew >> output/$org/whois.txtls
@@ -116,13 +116,13 @@ cat output/$org/dnscan.txtls | grep $org | egrep -iv ".(DMARC|spf|=|[*])" | cut 
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$org/dnscan.txtls | anew | wc -l)\e[0m"
 
-grep -P "^.[^.]+\.[a-zA-Z]{3}$|^.[^.]+\.[a-zA-Z]{2}\.[a-zA-Z]{2}$" all.txtls | anew  >> tld.txt
-subfinder -dL tld.txt --silent >> output/$org/subfinder2.txtls
+cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> tld.txtls
+subfinder -dL tld.txtls --silent >> output/$org/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$org/subfinder2.txtls | anew | wc -l)\e[0m"
 cat output/$org/subfinder2.txtls | grep "/" | cut -d "/" -f3 >> all.txtls
 cat output/$org/subfinder2.txtls | grep -v "/" >> all.txtls
 
-mv tld.txt output/$org/
+mv tld.txtls output/$org/
 echo "www.$domain_name" >> all.txtls
 echo "$domain_name" >> all.txtls
 cat all.txtls | anew | grep -v "*." >> $org.master
@@ -130,4 +130,4 @@ mv $org.master output/$org/$org.master
 sed -i 's/<br>/\n/g' output/$org/$org.master
 rm all.txtls
 echo -e "\e[93mTotal UNIQUE subdomains found: $(cat output/$org/$org.master | wc -l)\e[0m"
-echo -e "\e[93mTotal UNIQUE TLDs found: $(cat output/$org/tld.txt | wc -l)\e[0m"
+echo -e "\e[93mTotal UNIQUE TLDs found: $(cat output/$org/tld.txtls | wc -l)\e[0m"
