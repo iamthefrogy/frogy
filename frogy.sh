@@ -116,7 +116,9 @@ cat output/$org/dnscan.txtls | grep $org | egrep -iv ".(DMARC|spf|=|[*])" | cut 
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$org/dnscan.txtls | anew | wc -l)\e[0m"
 
-cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> tld.txtls
+python tld.py | grep -v "Match" | grep "\S" | anew >> tld.txtls
+
+#cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> tld.txtls
 subfinder -dL tld.txtls --silent >> output/$org/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$org/subfinder2.txtls | anew | wc -l)\e[0m"
 cat output/$org/subfinder2.txtls | grep "/" | cut -d "/" -f3 >> all.txtls
