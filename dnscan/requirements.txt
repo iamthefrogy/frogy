@@ -1,2 +1,0 @@
-dnspython>=2.0.0
-netaddr>=0.7.19
