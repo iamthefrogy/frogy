@@ -96,7 +96,7 @@ fi
 cat output/$org/whois.txtls >> all.txtls
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$org/whois.txtls | anew | wc -l)\e[0m"
 
-python3 sublister/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
+python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
 if [[ -e sublister_output.txt ]]
 then
         cat sublister_output.txt >> output/$org/sublister.txtls
