@@ -27,8 +27,8 @@ Using the combination of different subdomain enumeration tools and logic this sc
     git clone https://github.com/iamthefrogy/frogy.git
     cd frogy
     chmod +x frogy.sh
-    git clone https://github.com/aboul3la/Sublist3r.git (Just to put/have Sublister folder in the frogy folder)
-    git clone https://github.com/rbsec/dnscan.git (Just to put/have Dnscan folder in the frogy folder)   
+    git clone https://github.com/aboul3la/Sublist3r.git
+    git clone https://github.com/rbsec/dnscan.git
     ```
 + **Usage**
     ```sh
