@@ -5,7 +5,7 @@ import re
 
 regex = r"[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?$"
 
-with open('/root/ctftools/frogy/all.txtls', 'r') as test_str:
+with open('all.txtls', 'r') as test_str:
 	data = test_str.read()
 
 matches = re.finditer(regex, data, re.MULTILINE)
