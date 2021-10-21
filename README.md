@@ -46,9 +46,8 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  ~~Add dnscan for extened subdomain enum scope~~
 - ✅  ~~Add scope for extened subdomain enum scope~~
 - ✅  ~~Eliminate false positives. Currently around 2% to 4% false positives are there.~~
-- ✅  ~~Removed resolving part~~
-- ✅  ~~Find live URLs on standard (80, 443) and non-standard ports (8080, 8443, 8888, etc.)~~
 - ✅  ~~Bug Fixed, for false positive reporting of domains and subdomains.~~
+- ✅  ~~Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.~~
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
