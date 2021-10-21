@@ -89,7 +89,7 @@ if [ -z "$registrant" ]
 then
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois.txtls
 else
-        curl -s "https://crt.sh/?q="$registrant"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois.txtls
+        curl -s "https://crt.sh/?q="$registrant"" | grep -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$org/whois.txtls
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois.txtls
 fi
 
