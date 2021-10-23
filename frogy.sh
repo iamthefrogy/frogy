@@ -93,7 +93,17 @@ else
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois.txtls
 fi
 
-cat output/$org/whois.txtls >> all.txtls
+registrant2=$(whois $domain_name | grep "Registrant Organisation" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
+if [ -z "$registrant2" ]
+then
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois2.txtls
+else
+        curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$org/whois2.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$org/whois2.txtls
+fi
+
+cat output/$org/whois*.txtls >> all.txtls
+
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$org/whois.txtls | anew | wc -l)\e[0m"
 
 python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
