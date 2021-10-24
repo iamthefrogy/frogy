@@ -143,3 +143,4 @@ sed -i 's/<br>/\n/g' output/$org/$org.master
 rm all.txtls
 echo -e "\e[93mTotal UNIQUE subdomains found: $(cat output/$org/$org.master | wc -l)\e[0m"
 echo -e "\e[93mTotal UNIQUE TLDs found: $(cat output/$org/tld.txtls | wc -l)\e[0m"
+cat output/$org/tld.txtls
