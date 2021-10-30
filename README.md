@@ -49,6 +49,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Bug Fixed, for false positive reporting of domains and subdomains.
 - ✅  Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.
 - ✅  Now finds live websites on all standard/non-standard ports.
+- Find live subdomains and domains only.
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
