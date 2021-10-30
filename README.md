@@ -42,9 +42,8 @@ Using the combination of different subdomain enumeration tools and logic this sc
     
 **TODO**
 - ✅  Efficient folder structure management
-- ✅  Resolving subdomains using Massdns
+- Resolving subdomains using Massdns
 - ✅  Add dnscan for extened subdomain enum scope
-- ✅  Add scope for extened subdomain enum scope
 - ✅  Eliminate false positives. Currently around 2% to 4% false positives are there.
 - ✅  Bug Fixed, for false positive reporting of domains and subdomains.
 - ✅  Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.
