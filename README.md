@@ -6,7 +6,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 ![](https://visitor-badge.glitch.me/badge?page_id=iamthefrogy.frogy)<a href="https://twitter.com/iamthefrogy"> </a>
 
 **Logic**<br/>
-<img src="https://user-images.githubusercontent.com/8291014/110205963-f82cf700-7e72-11eb-9156-78f1d2e7a57a.png" alt="Frogy" title="Frogy" />
+<img src="https://user-images.githubusercontent.com/8291014/139606141-8647bb25-9b4b-469b-a83d-74fe75343397.png" alt="Frogy" title="Frogy" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
@@ -48,6 +48,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Bug Fixed, for false positive reporting of domains and subdomains.
 - ✅  Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.
 - ✅  Now finds live websites on all standard/non-standard ports.
+- ✅  Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
 - Find live subdomains and domains only independent to whether a website was found or not.
 
 #### Thanks to the authors of the tools used in this script.
