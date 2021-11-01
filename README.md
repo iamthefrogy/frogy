@@ -2,7 +2,7 @@
   <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy" height=230px></a>
   </h1>
   
-Using the combination of different subdomain enumeration tools and logic this script tries to identify more subdomains and TLDs in recon. <br/><br/>
+Using the combination of different subdomain enumeration tools and logic this script tries to identify more subdomains and root domains in recon. <br/><br/>
 ![](https://visitor-badge.glitch.me/badge?page_id=iamthefrogy.frogy)<a href="https://twitter.com/iamthefrogy"> </a>
 
 **Logic**<br/>
@@ -37,7 +37,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 + **Output**
     ```
     Output will be saved within output/ORG/ORG.master file. 
-    If telsa.com is your target then output file Of all the subdomains will be output/telsa/tesla.master and all the TLDs will be recorded in the output/tesla/tld.txtls file.
+    If telsa.com is your target then output file Of all the subdomains will be output/telsa/tesla.master and all the root domains will be recorded in the output/tesla/rootdomains.txtls file.
     ```
     
 **TODO**
