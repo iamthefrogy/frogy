@@ -117,7 +117,7 @@ fi
 cat output/$org/sublister.txtls >> all.txtls
 echo -e "\e[36mSublister count: \e[32m$(cat output/$org/sublister.txtls | anew | wc -l)\e[0m"
 
-findomain-linux -t $domain_name -q >> output/$org/findomain.txtls
+findomain -t $domain_name -q >> output/$org/findomain.txtls
 cat output/$org/findomain.txtls >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$org/findomain.txtls | anew | wc -l)\e[0m"
 
