@@ -6,7 +6,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 ![](https://visitor-badge.glitch.me/badge?page_id=iamthefrogy.frogy)<a href="https://twitter.com/iamthefrogy"> </a>
 
 **Logic**<br/>
-<img src="https://user-images.githubusercontent.com/8291014/139606306-6d9618f6-b0bb-43ac-8d48-af64f62d2d9b.jpg" alt="Frogy" title="Frogy" />
+<img src="https://user-images.githubusercontent.com/8291014/140434882-95e04fae-b225-4ab5-b686-3e6c8cfb9b0c.png" alt="Frogy" title="Frogy" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
