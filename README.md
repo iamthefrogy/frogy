@@ -50,7 +50,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.
 - ✅  Now finds live websites on all standard/non-standard ports.
 - ✅  Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
-- Find live subdomains and domains only independent to whether a website was found or not.
+- ✅  Now finds live web application based on top 1000 shodan http/https ports through facet analysis. Uses Naabu for fast port scan followed by httpx. (Credit: @nbk_2000)
 - Generate CSV (Root domains, Subdomains, Live sites, Login Portals, Technologies used, etc.)
 
 #### Thanks to the authors of the tools used in this script.
