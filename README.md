@@ -50,6 +50,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Now finds live websites on all standard/non-standard ports.
 - ✅  Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
 - Find live subdomains and domains only independent to whether a website was found or not.
+- Generate CSV (Root domains, Subdomains, Live sites, Login Portals, Technologies used, etc.)
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
