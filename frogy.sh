@@ -125,7 +125,7 @@ fi
 cat output/$cdir/sublister.txtls >> all.txtls
 echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | anew | wc -l)\e[0m"
 
-findomain -t $domain_name -q >> output/$cdir/findomain.txtls
+findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | anew | wc -l)\e[0m"
 
@@ -151,7 +151,9 @@ sed -i 's/<br>/\n/g' output/$cdir/$org.master
 rm all.txtls
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
-httpx -silent -l output/$org/$org.master -p 8080,10000,20000,2222,7080,9009,7443,2087,2096,8443,4100,2082,2083,2086,9999,2052,9001,9002,7000,7001,8082,8084,8085,8010,9000,2078,2080,2079,2053,2095,4000,5280,8888,9443,5800,631,8000,8008,8087,80,443,84,85,86,88,10125,9003,7071,8383,7547,3434,10443,8089,3004,81,4567,7081,82,444,1935,3000,9998,4433,4431,4443,83,90,8001,8099,300,591,593,832,981,1010,1311,2480,3128,3333,4243,4711,4712,4993,5000,5104,5108,6543,7396,7474,8014,8042,8069,8081,8088,8090,8091,8118,8123,8172,8222,8243,8280,8281,8333,8500,8834,8880,8983,9043,9060,9080,9090,9091,9200,9800,9981,12443,16080,18091,18092,20720,28017  -fr -include-chain -store-chain -sc -tech -server -title -cdn -cname -probe -srd output/$org/raw_http_responses -o output/$org/temp_live.txtls &> /dev/null
+portlst=`naabu -l output/$org/$org.master -pf ports.txt -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'`
+
+httpx -silent -l output/$org/$org.master -p $portlst  -fr -include-chain -store-chain -sc -tech -server -title -cdn -cname -probe -srd output/$org/raw_http_responses -o output/$org/temp_live.txtls &> /dev/null
 
 cat output/$org/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$org/livesites.txtls
 
@@ -165,7 +167,7 @@ while read lf; do
                 then
                 :
         else
-                echo "Login portal found on the website: $lf" >> output/$cdir/loginfound.txtls
+                echo "$lf" >> output/$cdir/loginfound.txtls
         fi
 
 done <output/$cdir/livesites.txtls
