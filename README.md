@@ -15,6 +15,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
   + [Find-domain](https://github.com/Findomain/Findomain) (Ensure the binary name is findomain-linux in the /usr/bin folder)
   + [httpx](https://github.com/projectdiscovery/httpx)
   + [anew](https://github.com/tomnomnom/anew)
+  + [naabu](https://github.com/projectdiscovery/naabu)
     
   You might require to install WHOIS and JQ depending upon your enviroment. You can install them using the following commands:
    ```sh
