@@ -57,7 +57,7 @@ echo -e "\e[92mIdentifying Subdomains \e[0m"
 echo -n "Is this program is in CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-        wget -q "https://chaos-data.projectdiscovery.io/index.json" && cat index.json | grep $org | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
+        wget -q "https://chaos-data.projectdiscovery.io/index.json" && cat index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
         cat *.txt >> output/$cdir/chaos.txtls || true
         rm index.json* || true
         cat output/$cdir/chaos.txtls >> all.txtls || true
@@ -87,10 +87,10 @@ cat all.txtls | cut -d "." -f12 >> temp_wordlist.txt
 cat all.txtls | cut -d "." -f13 >> temp_wordlist.txt
 cat all.txtls | cut -d "." -f14 >> temp_wordlist.txt
 cat all.txtls | cut -d "." -f15 >> temp_wordlist.txt
-cat temp_wordlist.txt | anew | sed '/^$/d' | sed 's/\*\.//g' | grep -v " " | grep -v "@" | grep -v "*" | sort -u >> $org-wordlist.txt
+cat temp_wordlist.txt | anew | sed '/^$/d' | sed 's/\*\.//g' | grep -v " " | grep -v "@" | grep -v "*" | sort -u >> $cdir_wordlist.txt
 
 rm temp_wordlist.txt
-mv $org-wordlist.txt output/$cdir
+mv $cdir_wordlist.txt output/$cdir
 
 registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
 if [ -z "$registrant" ]
@@ -129,8 +129,8 @@ findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | anew | wc -l)\e[0m"
 
-python3 dnscan/dnscan.py -d %%.$domain_name -w output/$cdir/$org-wordlist.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
-cat output/$cdir/dnscan.txtls | grep $org | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
+python3 dnscan/dnscan.py -d %%.$domain_name -w output/$cdir/$cdir_wordlist.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
+cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | anew | wc -l)\e[0m"
 
@@ -145,21 +145,21 @@ cat output/$cdir/subfinder2.txtls | grep -v "/" >> all.txtls
 mv rootdomain.txtls output/$cdir/
 echo "www.$domain_name" >> all.txtls
 echo "$domain_name" >> all.txtls
-cat all.txtls | anew | grep -v "*." >> $org.master
-mv $org.master output/$cdir/$org.master
-sed -i 's/<br>/\n/g' output/$cdir/$org.master
+cat all.txtls | anew | grep -v "*." >> $cdir.master
+mv $cdir.master output/$cdir/$cdir.master
+sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
-portlst=`naabu -l output/$org/$org.master -pf ports.txt -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'`
+portlst=`naabu -l output/$cdir/$cdir.master -pf ports.txt -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` &> /dev/null
 
-httpx -silent -l output/$org/$org.master -p $portlst  -fr -include-chain -store-chain -sc -tech -server -title -cdn -cname -probe -srd output/$org/raw_http_responses -o output/$org/temp_live.txtls &> /dev/null
+httpx -silent -l output/$cdir/$cdir.master -p $portlst  -fr -include-chain -store-chain -sc -tech -server -title -cdn -cname -probe -srd output/$org/raw_http_responses -o output/$org/temp_live.txtls &> /dev/null
 
-cat output/$org/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$org/livesites.txtls
+cat output/$cdir/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$cdir/livesites.txtls
 
-cat output/$org/temp_live.txtls | grep SUCCESS >> output/$org/technology.txtls
+cat output/$cdir/temp_live.txtls | grep SUCCESS >> output/$cdir/technology.txtls
 
-rm -f output/$org/temp_live.txtls
+rm -f output/$cdir/temp_live.txtls
 
 while read lf; do
         loginfound=`curl -s -L $lf | grep 'type="password"'`
@@ -182,6 +182,6 @@ if [[ -f "output/$cdir/loginfound.txtls" ]]
 		echo -e "\e[93mTotal login portals found: \e[32m0\e[0m"
 fi
 
-echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$org.master | wc -l)\e[0m"
+echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | wc -l)\e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | wc -l)\e[0m"
 cat output/$cdir/rootdomain.txtls
