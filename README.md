@@ -41,6 +41,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
     If telsa.com is your target then output file Of all the subdomains will be output/telsa/tesla.master and all the root domains will be recorded in the output/tesla/rootdomains.txtls file.
     ```
 <img src="https://user-images.githubusercontent.com/8291014/140436374-08423efb-b17a-49d7-b16f-23108e215a62.png" alt="Frogy" title="Frogy" width="550" height="550" />
+<img src="https://user-images.githubusercontent.com/8291014/140436973-71f45735-141c-4224-8e47-9855862719f4.png" alt="Frogy" title="Frogy" />
 
 **TODO**
 - ✅  Efficient folder structure management
