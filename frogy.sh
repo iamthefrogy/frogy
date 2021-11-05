@@ -57,7 +57,7 @@ echo -e "\e[92mIdentifying Subdomains \e[0m"
 echo -n "Is this program is in CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-        wget -q "https://chaos-data.projectdiscovery.io/index.json" && cat index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
+        curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do wget -q "$host";done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
         cat *.txt >> output/$cdir/chaos.txtls || true
         rm index.json* || true
         cat output/$cdir/chaos.txtls >> all.txtls || true
