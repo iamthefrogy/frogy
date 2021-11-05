@@ -22,7 +22,7 @@ echo -e "
 
 ############################################################### Housekeeping tasks ######################################################################
 
-echo -e "\e[94mEnter the organisation name: \e[0m"
+echo -e "\e[94mEnter the organisation name (Only lowercase letters, you can include space): \e[0m"
 read org
 
 cdir=`echo $org | tr " " "_"`
