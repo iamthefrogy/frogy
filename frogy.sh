@@ -82,27 +82,6 @@ else
 	:
 fi
 
-############ Generating Wordlist  ##############
-cat all.txtls | cut -d "." -f1 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f2 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f3 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f4 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f5 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f6 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f7 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f8 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f9 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f10 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f11 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f12 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f13 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f14 >> temp_wordlist.txt
-cat all.txtls | cut -d "." -f15 >> temp_wordlist.txt
-cat temp_wordlist.txt | anew | sed '/^$/d' | sed 's/\*\.//g' | grep -v " " | grep -v "@" | grep -v "*" | sort -u >> $cdir_wordlist.txt
-
-rm temp_wordlist.txt
-mv $cdir_wordlist.txt output/$cdir
-
 registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
 if [ -z "$registrant" ]
 then
@@ -140,7 +119,7 @@ findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
-python3 dnscan/dnscan.py -d %%.$domain_name -w output/$cdir/$cdir_wordlist.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
+python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
 cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
