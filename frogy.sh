@@ -25,7 +25,7 @@ echo -e "
 echo -e "\e[94mEnter the organisation name (Only lowercase letters, you can include space): \e[0m"
 read org
 
-cdir=`echo $org | tr " " "_"`
+cdir=`echo $org | tr '[:upper:]' '[:lower:]'| tr " " "_"`
 
 cwhois=`echo $org | tr " " "+"`
 
