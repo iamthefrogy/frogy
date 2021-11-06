@@ -61,7 +61,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
         cat *.txt >> output/$cdir/chaos.txtls || true
         rm index.json* || true
         cat output/$cdir/chaos.txtls >> all.txtls || true
-        echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | anew | wc -l)\e[0m"
+        echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
         find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
         subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls
         rm subfinder.domains
@@ -112,7 +112,7 @@ fi
 
 cat output/$cdir/whois*.txtls >> all.txtls
 
-echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | anew | wc -l)\e[0m"
+echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
 if [[ -e sublister_output.txt ]]
@@ -123,29 +123,29 @@ else
         :
 fi
 cat output/$cdir/sublister.txtls >> all.txtls
-echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | anew | wc -l)\e[0m"
+echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls >> all.txtls
-echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | anew | wc -l)\e[0m"
+echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 python3 dnscan/dnscan.py -d %%.$domain_name -w output/$cdir/$cdir_wordlist.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
 cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
 
-echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | anew | wc -l)\e[0m"
+echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 python tld.py | grep -v "Match" | grep "\S" | anew >> rootdomain.txtls
 
 #cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> rootdomain.txtls
 subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls
-echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | anew | wc -l)\e[0m"
+echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 >> all.txtls
 cat output/$cdir/subfinder2.txtls | grep -v "/" >> all.txtls
 
 mv rootdomain.txtls output/$cdir/
 echo "www.$domain_name" >> all.txtls
 echo "$domain_name" >> all.txtls
-cat all.txtls | anew | grep -v "*." >> $cdir.master
+cat all.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v "*." >> $cdir.master
 mv $cdir.master output/$cdir/$cdir.master
 sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
@@ -173,15 +173,15 @@ while read lf; do
 done <output/$cdir/livesites.txtls
 
 
-echo -e "\e[93mTotal live websites (on all available ports) found: \e[32m$(cat output/$cdir/livesites.txtls | wc -l)\e[0m"
+echo -e "\e[93mTotal live websites (on all available ports) found: \e[32m$(cat output/$cdir/livesites.txtls | tr '[:upper:]' '[:lower:]' | anew | wc -l)\e[0m"
 
 if [[ -f "output/$cdir/loginfound.txtls" ]]
 	then
-		echo -e "\e[93mTotal login portals found: \e[32m$(cat output/$cdir/loginfound.txtls | wc -l)\e[0m"
+		echo -e "\e[93mTotal login portals found: \e[32m$(cat output/$cdir/loginfound.txtls | tr '[:upper:]' '[:lower:]' | anew| wc -l)\e[0m"
 	else
 		echo -e "\e[93mTotal login portals found: \e[32m0\e[0m"
 fi
 
-echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | wc -l)\e[0m"
-echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | wc -l)\e[0m"
-cat output/$cdir/rootdomain.txtls
+echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
+echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
+cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
