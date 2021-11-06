@@ -124,7 +124,7 @@ cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*]
 
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
-python tld.py | grep -v "Match" | grep "\S" | anew >> rootdomain.txtls
+python rootdomain.py | grep -v "Match" | grep "\S" | anew >> rootdomain.txtls
 
 #cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> rootdomain.txtls
 subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls
