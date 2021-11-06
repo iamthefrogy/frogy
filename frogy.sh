@@ -57,20 +57,31 @@ echo -e "\e[92mIdentifying Subdomains \e[0m"
 echo -n "Is this program is in CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
-        curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json; cat index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | while read host do;do curl -s "$host" -O;done && for i in `ls -1 | grep .zip$`;  do unzip -qq $i; done && rm *.zip || true
-        cat *.txt >> output/$cdir/chaos.txtls || true
-        rm index.json* || true
-        cat output/$cdir/chaos.txtls >> all.txtls || true
-        echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-        find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-        subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls
-        rm subfinder.domains
-        cat output/$cdir/subfinder.txtls >> all.txtls
-        rm *.txt
+        curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json
+	chaosvar=`cat index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | xargs`
+	if [ -z "$chaosvar" ]
+	then
+		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
+		subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls
+	        cat output/$cdir/subfinder.txtls >> all.txtls
+	else
+		curl -s "$chaosvar" -O
+		unzip -qq *.zip
+		cat *.txt >> output/$cdir/chaos.txtls
+		cat output/$cdir/chaos.txtls >> all.txtls
+		echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+		find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
+	        subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls
+		rm subfinder.domains
+		cat output/$cdir/subfinder.txtls >> all.txtls
+		rm *.zip
+		rm *.txt
+	fi
+        rm index.json*
 else
-        subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls
-        cat output/$cdir/subfinder.txtls >> all.txtls
+	:
 fi
+
 ############ Generating Wordlist  ##############
 cat all.txtls | cut -d "." -f1 >> temp_wordlist.txt
 cat all.txtls | cut -d "." -f2 >> temp_wordlist.txt
