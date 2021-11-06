@@ -52,6 +52,10 @@ else
 fi
 
 ############################################################### Subdomain enumeration ######################################################################
+
+
+#################### CHAOS ENUMERATION ######################
+
 echo -e "\e[92mIdentifying Subdomains \e[0m"
 
 echo -n "Is this program is in CHAOS dataset? (y/n)? "
@@ -82,6 +86,8 @@ else
 	:
 fi
 
+#################### CERTIFICATE ENUMERATION ######################
+
 registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
 if [ -z "$registrant" ]
 then
@@ -99,10 +105,11 @@ else
         curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois2.txtls
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois2.txtls
 fi
-
 cat output/$cdir/whois*.txtls >> all.txtls
-
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+
+
+#################### SUBLIST3R ENUMERATION ######################
 
 python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
 if [[ -e sublister_output.txt ]]
@@ -115,18 +122,25 @@ fi
 cat output/$cdir/sublister.txtls >> all.txtls
 echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
+#################### FINDOMAIN ENUMERATION ######################
+
 findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
-python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
-cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
-
-echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+#################### GATHERING ROOT DOMAINS ######################
 
 python rootdomain.py | grep -v "Match" | grep "\S" | anew >> rootdomain.txtls
-
 #cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> rootdomain.txtls
+
+#################### DNSCAN ENUMERATION ######################
+
+python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnscan.txtls &> /dev/null
+cat output/$cdir/dnscan.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u >> all.txtls
+echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+
+#################### SUBFINDER2 ENUMERATION ######################
+
 subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 >> all.txtls
@@ -139,6 +153,8 @@ cat all.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v "*." >> $cdir.master
 mv $cdir.master output/$cdir/$cdir.master
 sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
+
+
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
 portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` &> /dev/null
