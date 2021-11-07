@@ -130,7 +130,7 @@ echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[
 
 #################### GATHERING ROOT DOMAINS ######################
 
-python rootdomain.py | grep -v "Match" | grep "\S" | anew >> rootdomain.txtls
+python3 rootdomain.py | cut -d " " -f7 | anew | sed '/^$/d' >> rootdomain.txtls
 #cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> rootdomain.txtls
 
 #################### DNSCAN ENUMERATION ######################
