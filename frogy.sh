@@ -112,15 +112,15 @@ echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | 
 #################### SUBLIST3R ENUMERATION ######################
 
 python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
-if [[ -e sublister_output.txt ]]
-then
+
+if [ -f "sublister_output.txt" ]; then
         cat sublister_output.txt >> output/$cdir/sublister.txtls
         rm sublister_output.txt
+	cat output/$cdir/sublister.txtls >> all.txtls
+	echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 else
-        :
+        echo -e "\e[36mSublister count: \e[32m0\e[0m"
 fi
-cat output/$cdir/sublister.txtls >> all.txtls
-echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 #################### FINDOMAIN ENUMERATION ######################
 
@@ -159,7 +159,7 @@ rm all.txtls
 
 portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` &> /dev/null
 
-httpx -silent -l output/$cdir/$cdir.master -p ports  -fr -include-chain -store-chain -sc -td -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses -o output/$cdir/temp_live.txtls &> /dev/null
+httpx -silent -l output/$cdir/$cdir.master -p ports  -fr -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses -o output/$cdir/temp_live.txtls &> /dev/null
 
 cat output/$cdir/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$cdir/livesites.txtls
 
