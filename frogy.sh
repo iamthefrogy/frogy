@@ -157,7 +157,7 @@ rm all.txtls
 
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
-portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` | sed 's/,/, /g' &> /dev/null
+portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//' | sed 's/,/, /g'` &> /dev/null
 
 httpx -silent -l output/$cdir/$cdir.master -p $portlst  -fr -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses -o output/$cdir/temp_live.txtls &> /dev/null
 
