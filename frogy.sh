@@ -191,5 +191,3 @@ fi
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
-
-nuclei -l output/$cdir/livesites.txtls -silent -severity critical,medium,high,low -o output/$cdir/nuclei.result | notify -provider telegram
