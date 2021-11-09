@@ -191,5 +191,10 @@ fi
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
 echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
-paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
-cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
+
+if [ -f output/$org/loginfound.txtls ]; then
+        paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
+else
+        paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
+fi
+#cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
