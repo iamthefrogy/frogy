@@ -22,7 +22,7 @@ echo -e "
 
 ############################################################### Housekeeping tasks ######################################################################
 
-echo -e "\e[94mEnter the organisation name (Only lowercase letters, you can include space): \e[0m"
+echo -e "\e[94mEnter the organisation name (E.g., Carbon Black): \e[0m"
 read org
 
 cdir=`echo $org | tr '[:upper:]' '[:lower:]'| tr " " "_"`
@@ -91,19 +91,19 @@ fi
 registrant=$(whois $domain_name &> /dev/null | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
 if [ -z "$registrant" ]
 then
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | grep -oP '[a-z0-9]+\.[a-z]+\.[a-z]+'| anew >> output/$cdir/whois.txtls
 else
         curl -s "https://crt.sh/?q="$registrant"" | grep -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | grep -oP '[a-z0-9]+\.[a-z]+\.[a-z]+'| anew >> output/$cdir/whois.txtls
 fi
 
 registrant2=$(whois $domain_name &> /dev/null | grep "Registrant Organisation" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
 if [ -z "$registrant2" ]
 then
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois2.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | grep -oP '[a-z0-9]+\.[a-z]+\.[a-z]+'| anew >> output/$cdir/whois2.txtls
 else
         curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois2.txtls
-        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois2.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | grep -oP '[a-z0-9]+\.[a-z]+\.[a-z]+' | anew >> output/$cdir/whois2.txtls
 fi
 cat output/$cdir/whois*.txtls >> all.txtls
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
@@ -190,4 +190,6 @@ fi
 
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
+echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
+paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
