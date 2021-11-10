@@ -1,3 +1,5 @@
+##### RUN IT AS ROOT AND ENSURE YOU HAVE GO INSTALLED ON YOUR KALI MACHINE
+
 apt install -y jq
 apt install -y whois
 sudo apt install -y libpcap-dev
@@ -10,6 +12,6 @@ go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
 wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux
 chmod +x findomain-linux
-cp findomain-linux /usr/bin
+mv findomain-linux /usr/bin/
 cd /root/go/bin
 cp anew httpx subfinder naabu /usr/bin/
