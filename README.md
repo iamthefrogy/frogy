@@ -9,7 +9,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 <img src="https://user-images.githubusercontent.com/8291014/140434882-95e04fae-b225-4ab5-b686-3e6c8cfb9b0c.png" alt="Frogy" title="Frogy" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
-+ **Tools used - You must need to install these tools and place them into /usr/bin folder to use this script**<br/>
++ **Tools used in this script - Below tools are covered in the installation process already.**<br/>
 
   + [SubFinder](https://github.com/projectdiscovery/subfinder)
   + [Find-domain](https://github.com/Findomain/Findomain) (Ensure the binary name is findomain-linux in the /usr/bin folder)
@@ -44,7 +44,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Now finds live websites on all standard/non-standard ports.
 - ✅  Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
 - ✅  Now finds live web application based on top 1000 shodan http/https ports through facet analysis. Uses Naabu for fast port scan followed by httpx. (Credit: @nbk_2000)
-- Generate CSV (Root domains, Subdomains, Live sites, Login Portals, Technologies used, etc.)
+- ✅  Generate CSV (Root domains, Subdomains, Live sites, Login Portals)
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
