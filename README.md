@@ -17,19 +17,10 @@ Using the combination of different subdomain enumeration tools and logic this sc
   + [anew](https://github.com/tomnomnom/anew)
   + [naabu](https://github.com/projectdiscovery/naabu)
     
-  You might require to install WHOIS and JQ depending upon your enviroment. You can install them using the following commands:
-   ```sh
-    apt install jq
-    apt install whois
-    ```
-  
 + **Installation**
     ```sh
-    git clone https://github.com/iamthefrogy/frogy.git
-    cd frogy
-    chmod +x frogy.sh
-    git clone https://github.com/aboul3la/Sublist3r.git
-    git clone https://github.com/rbsec/dnscan.git
+  chmod +x install.sh
+  ./install.sh
     ```
 + **Usage**
     ```sh
