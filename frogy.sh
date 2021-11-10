@@ -130,7 +130,7 @@ echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[
 
 #################### GATHERING ROOT DOMAINS ######################
 
-python3 rootdomain.py | cut -d " " -f7 | anew | sed '/^$/d' >> rootdomain.txtls
+python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed '/^$/d' >> rootdomain.txtls
 #cat  all.txtls | awk -F\. '{print $(NF-1) FS $NF}' | anew >> rootdomain.txtls
 
 #################### DNSCAN ENUMERATION ######################
@@ -189,7 +189,6 @@ if [[ -f "output/$cdir/loginfound.txtls" ]]
 fi
 
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
-echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
 echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
 
 if [ -f output/$org/loginfound.txtls ]; then
@@ -197,4 +196,5 @@ if [ -f output/$org/loginfound.txtls ]; then
 else
         paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
 fi
-#cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
+echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
+cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
