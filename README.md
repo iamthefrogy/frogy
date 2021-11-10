@@ -12,7 +12,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 + **Tools used in this script - Below tools are covered in the installation process already.**<br/>
 
   + [SubFinder](https://github.com/projectdiscovery/subfinder)
-  + [Find-domain](https://github.com/Findomain/Findomain) (Ensure the binary name is findomain-linux in the /usr/bin folder)
+  + [Find-domain](https://github.com/Findomain/Findomain)
   + [httpx](https://github.com/projectdiscovery/httpx)
   + [anew](https://github.com/tomnomnom/anew)
   + [naabu](https://github.com/projectdiscovery/naabu)
