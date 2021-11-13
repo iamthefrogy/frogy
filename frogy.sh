@@ -190,7 +190,7 @@ fi
 
 echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
 
-if [ -f output/$org/loginfound.txtls ]; then
+if [ -f output/$cdir/loginfound.txtls ]; then
         paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
 else
         paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
