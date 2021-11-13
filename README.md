@@ -26,12 +26,16 @@ Using the combination of different subdomain enumeration tools and logic this sc
     ```sh
     ./frogy.sh
     ```
++ **Demo**
+
+    [![demo](https://asciinema.org/a/xDJyE9TccP1L809DPWGtIvuPj.svg)](https://asciinema.org/a/xDJyE9TccP1L809DPWGtIvuPj?autoplay=1)
+
+
 + **Output**
     ```
     Output will be saved within output/ORG/ORG.master file. 
     If you give 'chintan frogy' as your organization input, then the script will automatically create the 'chintan_frogy' folder inside the 'output' directory.
     ```
-<img src="https://user-images.githubusercontent.com/8291014/140436374-08423efb-b17a-49d7-b16f-23108e215a62.png" alt="Frogy" title="Frogy" width="550" height="550" />
 <img src="https://user-images.githubusercontent.com/8291014/140436973-71f45735-141c-4224-8e47-9855862719f4.png" alt="Frogy" title="Frogy" />
 
 **TODO**
