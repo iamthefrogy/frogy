@@ -1,7 +1,8 @@
 <h1 align="center">
   <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy" height=230px></a>
+
   </h1>
-  
+<h4 align="center"> Made with ❤️ ❤️ ❤️ from :india: </h1><br/>
 Using the combination of different subdomain enumeration tools and logic this script tries to identify more subdomains and root domains in recon. <br/><br/>
 ![](https://visitor-badge.glitch.me/badge?page_id=iamthefrogy.frogy)<a href="https://twitter.com/iamthefrogy"> </a>
 
