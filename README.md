@@ -2,7 +2,7 @@
   <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy" height=230px></a>
 
   </h1>
-<h4 align="center"> Made with ❤️ ❤️ ❤️ from <img src="https://user-images.githubusercontent.com/8291014/145205748-5530f102-9102-4659-a141-21872f237c57.png" alt="frogy" height=20px></a> </h1><br/>
+<h4 align="center"> Made with ❤️ ❤️ ❤️ from <img src="https://user-images.githubusercontent.com/8291014/145205748-5530f102-9102-4659-a141-21872f237c57.png" alt="frogy" height=20px> </h4>
 Using the combination of different subdomain enumeration tools and logic this script tries to identify more subdomains and root domains in recon. <br/><br/>
 
 **Logic**<br/>
