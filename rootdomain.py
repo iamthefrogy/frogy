@@ -3,7 +3,7 @@
 
 import re
 
-regex = r"[^.]*\.[^.]{2,3}(?:\.[^.]{2,3})?$"
+regex = r"[^.]*.[^.]{2,3}(?:.[^.]{2,3})?$"
 
 with open('all.txtls', 'r') as test_str:
 	data = test_str.read()
