@@ -49,6 +49,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
 - ✅  Now finds live web application based on top 1000 shodan http/https ports through facet analysis. Uses Naabu for fast port scan followed by httpx. (Credit: @nbk_2000)
 - ✅  Generate CSV (Root domains, Subdomains, Live sites, Login Portals)
+- ✅  Now provides output for resolved subdomains
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
