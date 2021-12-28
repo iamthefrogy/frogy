@@ -154,6 +154,18 @@ mv $cdir.master output/$cdir/$cdir.master
 sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
 
+#################### SUBDOMAIN RESOLVER ######################
+
+while read d || [[ -n $d ]]; do
+  ip=$(dig +short $d|grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"|head -1)
+  if [ -n "$ip" ]; then
+    echo "$d,$ip" >>output/$cdir/resolved.txtls
+  else
+    echo "$d,Can't Resolve" >>output/$cdir/resolved.txtls
+  fi
+done <output/$cdir/$cdir.master
+sort output/$cdir/resolved.txtls | uniq > output/$cdir/resolved.new
+mv output/$cdir/resolved.new output/$cdir/resolved.txtls
 
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
@@ -190,11 +202,17 @@ fi
 
 echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
 
+cat output/$cdir/resolved.txtls | cut -d ',' -f1 >> temp1.txt
+cat output/$cdir/resolved.txtls | cut -d ',' -f2 >> temp2.txt
+
 if [ -f output/$cdir/loginfound.txtls ]; then
-        paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
+	paste -d ','  output/$cdir/rootdomain.txtls temp1.txt temp2.txt output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domain,Subdomain,IP Address,Live Website,Login Portals' > output/$cdir/output.csv
+
 else
-        paste -d ','  output/$cdir/rootdomain.txtls output/$cdir/$cdir.master output/$cdir/livesites.txtls | sed '1 i \Root Domains,Subdomains,Live Sites,Login Portals' > output/$cdir/output.csv
+	paste -d ','  output/$cdir/rootdomain.txtls temp1.txt temp2.txt output/$cdir/livesites.txtls | sed '1 i \Root Domain,Subdomain,IP Address,Live Website' > output/$cdir/output.csv
 fi
+rm temp1.txt temp2.txt
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
+echo -e "\e[93mTotal unique resolved subdomains found: \e[32m$(cat output/$cdir/resolved.txtls | grep -v "Can't" | wc -l) \e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
