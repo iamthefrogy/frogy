@@ -62,7 +62,7 @@ echo -n "Is this program is in CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
         curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json
-	chaosvar=`cat index.json | grep $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | xargs`
+	chaosvar=`cat index.json | grep -w $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | xargs`
 	if [ -z "$chaosvar" ]
 	then
 		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
