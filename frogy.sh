@@ -86,6 +86,12 @@ else
 	:
 fi
 
+#################### AMASS ENUMERATION #############################
+
+amass enum -passive -norecursive -nolocaldb -noalts -d $domain_name >> output/$cdir/amass.txtls
+cat output/$cdir/amass.txtls | anew >> all.txtls
+echo -e "\e[36mAmaas count: \e[32m$(cat output/$cdir/amass.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+
 #################### WayBackEngine  ENUMERATION ######################
 # this code is taken from another open-source project at - https://github.com/bing0o/SubEnum/blob/master/subenum.sh
 
