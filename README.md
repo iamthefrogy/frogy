@@ -52,6 +52,7 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Now provides output for resolved subdomains
 - ✅  Added WayBackEngine support from another project
 - ✅  Added BufferOver support from another project.
+- ✅  Added Amass coverage.
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
