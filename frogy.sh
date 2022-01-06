@@ -58,7 +58,7 @@ fi
 
 echo -e "\e[92mIdentifying Subdomains \e[0m"
 
-echo -n "Is this program is in CHAOS dataset? (y/n)? "
+echo -n "Is this program is in the CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
         curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json
