@@ -13,11 +13,14 @@ Using the combination of different subdomain enumeration tools and logic this sc
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used in this script - Below tools are covered in the installation process already.**<br/>
 
-  + [SubFinder](https://github.com/projectdiscovery/subfinder)
+  + [subFinder](https://github.com/projectdiscovery/subfinder)
   + [Find-domain](https://github.com/Findomain/Findomain)
   + [httpx](https://github.com/projectdiscovery/httpx)
   + [anew](https://github.com/tomnomnom/anew)
   + [naabu](https://github.com/projectdiscovery/naabu)
+  + [amass](https://github.com/OWASP/Amass)
+  + [sublist3r](https://github.com/aboul3la/Sublist3r)
+  + [dnscan](https://github.com/rbsec/dnscan)
     
 + **Installation**
     ```sh
