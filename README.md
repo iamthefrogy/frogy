@@ -58,6 +58,9 @@ Using the combination of different subdomain enumeration tools and logic this sc
 - ✅  Added WayBackEngine support from another project
 - ✅  Added BufferOver support from another project.
 - ✅  Added Amass coverage.
+- Add docker support to avoid dependency issues.
+- Add progress bar for each main feature runnign so it shows some progress while running.
+  
 
 #### Thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
