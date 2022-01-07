@@ -8,7 +8,7 @@
 Using the combination of different subdomain enumeration tools and logic this script tries to identify more subdomains and root domains in recon. <br/><br/>
 
 **Logic**<br/>
-<img src="https://user-images.githubusercontent.com/8291014/140434882-95e04fae-b225-4ab5-b686-3e6c8cfb9b0c.png" alt="Frogy" title="Frogy" />
+<img src="https://user-images.githubusercontent.com/8291014/148620188-3966a2e9-0089-401f-bf90-7909a93af1bf.jpg" alt="Frogy" title="Frogy" />
 
 + **Requirements:** Go Language, Python 3.+, jq<br/>
 + **Tools used in this script - Below tools are covered in the installation process already.**<br/>
