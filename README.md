@@ -8,9 +8,9 @@
 My Goal is to create an the open-source Attack Surface Management solution and make it capable to find all the IPs, domains, subdomains, live websites, login portals for one company. <br/><br/>
 
 **How it can help a large company (Some usecases):**
-- **Vulnerability management team:** Can use the result to feed into their known and unknown assets database to prioritize intel activities.
-- **Threat intel team:** Can use the result to keep their asset inventory data up to date with known and unknown assets facing the Internet.
-- **Asset inventory team:** Can use the result to identify all assets they are monitoring vs not monitoring and then slowly increase their coverage.
+- **Vulnerability management team:** Can use the result to feed into their known and unknown assets database to incease their vulnerability scanning coverage.
+- **Threat intel team:** Can use the result to feed into their intel DB to prioritize proactive monitoring for critical assets.
+- **Asset inventory team:** Can use the result to keep their asset inventory database up-to-date by adding new unknown assets facing Internet and finding contact information for the assets inside your organization.
 - **SOC team:** Can use the result to identify what all assets they are monitoring vs. not monitoring and then increase their coverage slowly.
 - **Patch management team:** Many large organizations are unaware of their legacy, abandoned assets facing the Internet; they can utilize this result to identify what assets need to be taken offline if they are not being used.<br/>
 
