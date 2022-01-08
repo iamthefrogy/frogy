@@ -44,11 +44,13 @@ then
         echo -e "\e[94mCreating $org directory in the 'output' folder...\e[0m"
         rm -r -f output/$cdir
         mkdir output/$cdir
-	mkdir output/$cdir/raw_http_responses
+	mkdir output/$cdir/raw_output
+	mkdir output/$cdir/raw_output/raw_http_responses
 else
         echo -e "\e[94mCreating $org directory in the 'output' folder... \e[0m"
         mkdir output/$cdir
-	mkdir output/$cdir/raw_http_responses
+	mkdir output/$cdir/raw_output
+	mkdir output/$cdir/raw_output/raw_http_responses
 fi
 
 ############################################################### Subdomain enumeration ######################################################################
@@ -216,6 +218,7 @@ echo -e "\e[93mTotal live websites (on all available ports) found: \e[32m$(cat o
 if [[ -f "output/$cdir/loginfound.txtls" ]]
 	then
 		echo -e "\e[93mTotal login portals found: \e[32m$(cat output/$cdir/loginfound.txtls | tr '[:upper:]' '[:lower:]' | anew| wc -l)\e[0m"
+		mv output/$cdir/loginfound.txtls output/$cdir/raw_output
 	else
 		echo -e "\e[93mTotal login portals found: \e[32m0\e[0m"
 fi
@@ -236,3 +239,8 @@ echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.mas
 echo -e "\e[93mTotal unique resolved subdomains found: \e[32m$(cat output/$cdir/resolved.txtls | grep -v "Can't" | wc -l) \e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
+mv output/$cdir/*.txtls output/$cdir/raw_output
+mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
+mv output/$cdir/raw_output/resolved.txtls output/$cdir/
+mv output/$cdir/raw_output/livesites.txtls output/$cdir/
+mv output/$cdir/raw_output/loginfound.txtls output/$cdir/
