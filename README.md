@@ -5,7 +5,7 @@
 
   </h1>
 <h4 align="center"> Made with ❤️ ❤️ ❤️ from <img src="https://user-images.githubusercontent.com/8291014/145205748-5530f102-9102-4659-a141-21872f237c57.png" alt="frogy" height=20px> </h4>
-My Goal is to create an the open-source Attack Surface Management solution and make it capable to find all the IPs, domains, subdomains, live websites, login portals for one company. <br/><br/>
+My Goal is to create an open-source Attack Surface Management solution and make it capable to find all the IPs, domains, subdomains, live websites, login portals for one company. <br/><br/>
 
 **How it can help a large company (Some usecases):**
 - **Vulnerability management team:** Can use the result to feed into their known and unknown assets database to incease their vulnerability scanning coverage.
