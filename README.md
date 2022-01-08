@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/111029632-a1d13280-83f5-11eb-943a-002f71680d90.png" alt="frogy" height=230px></a>
+  <a href="https://github.com/iamthefrogy/frogy"><img src="https://user-images.githubusercontent.com/8291014/148647453-9328388b-1d04-4f76-99f4-c1f8d6aa8929.jpg" alt="frogy" height=230px></a>
 
 ![](https://visitor-badge.glitch.me/badge?page_id=iamthefrogy.frogy)<a href="https://twitter.com/iamthefrogy"> </a>
 
