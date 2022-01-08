@@ -38,8 +38,7 @@ It has multiple use cases depending your organization's processes and technology
     ./frogy.sh
     ```
 + **Demo**
-
-    [![demo](https://asciinema.org/a/xDJyE9TccP1L809DPWGtIvuPj.svg)](https://asciinema.org/a/xDJyE9TccP1L809DPWGtIvuPj?autoplay=1)
+    <br/><img src="https://user-images.githubusercontent.com/8291014/148625824-0760f6fe-6d8f-4217-85e7-1432388b1ee9.png" alt="Frogy" title="Frogy" height=600px />
 
 + **Output**
     ```
