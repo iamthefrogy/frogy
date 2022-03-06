@@ -17,3 +17,7 @@ chmod +x findomain-linux
 mv findomain-linux /usr/bin/
 cd /root/go/bin
 cp anew httpx subfinder naabu /usr/bin/
+
+# kali user and ubuntu user
+pip install -r dnscan/requirements.txt
+pip install -r Sublist3r/requirements.txt
