@@ -68,7 +68,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 	if [ -z "$chaosvar" ]
 	then
 		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
-		subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls
+		subfinder -d $domain_name -all -t 50 -silent >> output/$cdir/subfinder.txtls
 	        cat output/$cdir/subfinder.txtls >> all.txtls
 	else
 		curl -s "$chaosvar" -O
@@ -146,7 +146,7 @@ fi
 
 #################### FINDOMAIN ENUMERATION ######################
 
-findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
+$(pwd)/findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew |grep -v " "|grep -v "@" | grep "\."| wc -l)\e[0m"
 
@@ -156,14 +156,14 @@ python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed
 
 #################### DNSCAN ENUMERATION ######################
 
-python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnstemp.txtls &> /dev/null
+python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -t 50 -D -o output/$cdir/dnstemp.txtls &> /dev/null
 cat output/$cdir/dnstemp.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u | grep -v " "|grep -v "@" | grep "\." >>  output/$cdir/dnscan.txtls
 rm output/$cdir/dnstemp.txtls
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
 
 #################### SUBFINDER2 ENUMERATION ######################
 
-subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls
+subfinder -dL rootdomain.txtls -all -t 50 -silent >> output/$cdir/subfinder2.txtls
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 | grep -v " "|grep -v "@" | grep "\." >> all.txtls
 cat output/$cdir/subfinder2.txtls | grep -v "/" | grep -v " "|grep -v "@" | grep "\."  >> all.txtls
@@ -243,4 +243,4 @@ mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
 mv output/$cdir/raw_output/resolved.txtls output/$cdir/
 mv output/$cdir/raw_output/livesites.txtls output/$cdir/
-mv output/$cdir/raw_output/loginfound.txtls output/$cdir/
+#mv output/$cdir/raw_output/loginfound.txtls output/$cdir/
