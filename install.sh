@@ -19,5 +19,6 @@ cd /root/go/bin
 cp anew httpx subfinder naabu /usr/bin/
 
 # kali user and ubuntu user
+apt install pip
 pip install -r dnscan/requirements.txt
 pip install -r Sublist3r/requirements.txt
