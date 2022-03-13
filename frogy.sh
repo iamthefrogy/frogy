@@ -200,7 +200,7 @@ mv output/$cdir/resolved.new output/$cdir/resolved.txtls
 
 portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` &> /dev/null
 
-httpx -silent -l output/$cdir/$cdir.master -p $portlst -fr -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses/ -o output/$cdir/temp_live.txtls &> /dev/null
+httpx -silent -l output/$cdir/$cdir.master -p $portlst -mc 200 -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses/ -o output/$cdir/temp_live.txtls &> /dev/null
 
 cat output/$cdir/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$cdir/livesites.txtls
 
