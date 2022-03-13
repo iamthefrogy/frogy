@@ -68,7 +68,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 	if [ -z "$chaosvar" ]
 	then
 		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
-		subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls &> /dev/null
+		subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls 
 	        cat output/$cdir/subfinder.txtls >> all.txtls
 	else
 		curl -s "$chaosvar" -O
@@ -77,7 +77,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 		cat output/$cdir/chaos.txtls >> all.txtls
 		echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 		find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-	        subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls &> /dev/null
+	        subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls 
 		rm subfinder.domains
 		cat output/$cdir/subfinder.txtls >> all.txtls
 		rm *.zip
@@ -163,10 +163,16 @@ echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[
 
 #################### SUBFINDER2 ENUMERATION ######################
 
-subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls &> /dev/null
+subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls 
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 | grep -v " "|grep -v "@" | grep "\." >> all.txtls
 cat output/$cdir/subfinder2.txtls | grep -v "/" | grep -v " "|grep -v "@" | grep "\."  >> all.txtls
+
+#################### CROBAT ENUMERATION ######################
+
+crobat -s rootdomain.txtls >> output/$cdir/crobat.txtls
+echo -e "\e[36mCrobat count: \e[32m$(cat output/$cdir/crobat.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
+cat output/$cdir/crobat.txtls | anew >> all.txtls
 
 mv rootdomain.txtls output/$cdir/
 echo "www.$domain_name" >> all.txtls
@@ -175,6 +181,7 @@ cat all.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v "*." | grep -v " "|gr
 mv $cdir.master output/$cdir/$cdir.master
 sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
+
 
 #################### SUBDOMAIN RESOLVER ######################
 
@@ -218,7 +225,6 @@ echo -e "\e[93mTotal live websites (on all available ports) found: \e[32m$(cat o
 if [[ -f "output/$cdir/loginfound.txtls" ]]
 	then
 		echo -e "\e[93mTotal login portals found: \e[32m$(cat output/$cdir/loginfound.txtls | tr '[:upper:]' '[:lower:]' | anew| wc -l)\e[0m"
-		mv output/$cdir/loginfound.txtls output/$cdir/raw_output
 	else
 		echo -e "\e[93mTotal login portals found: \e[32m0\e[0m"
 fi
@@ -243,4 +249,3 @@ mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
 mv output/$cdir/raw_output/resolved.txtls output/$cdir/
 mv output/$cdir/raw_output/livesites.txtls output/$cdir/
-mv output/$cdir/raw_output/loginfound.txtls output/$cdir/
