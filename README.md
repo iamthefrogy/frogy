@@ -63,7 +63,7 @@ It has multiple use cases depending your organization's processes and technology
 - :construction: Add docker support to avoid dependency issues.
 - :construction: Add progress bar for each main feature runnign so it shows some progress while running.
 - :construction: Reducing execution time by performing resolved asset's port discovery.
-- :construction: Add crobat support from Rapid7.
+- :heavy_check_mark: Add crobat support from Rapid7.
   
 
 #### A very warm thanks to the authors of the tools used in this script.
