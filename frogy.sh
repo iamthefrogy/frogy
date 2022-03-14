@@ -68,7 +68,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 	if [ -z "$chaosvar" ]
 	then
 		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
-		subfinder -d $domain_name --silent >> output/$cdir/subfinder.txtls 
+		subfinder -d $domain_name --silent -o output/$cdir/subfinder.txtls > /dev/null 2>&1
 	        cat output/$cdir/subfinder.txtls >> all.txtls
 	else
 		curl -s "$chaosvar" -O
@@ -77,7 +77,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 		cat output/$cdir/chaos.txtls >> all.txtls
 		echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 		find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-	        subfinder -dL subfinder.domains --silent -recursive >> output/$cdir/subfinder.txtls 
+	        subfinder -dL subfinder.domains --silent -recursive -o output/$cdir/subfinder.txtls > /dev/null 2>&1
 		rm subfinder.domains
 		cat output/$cdir/subfinder.txtls >> all.txtls
 		rm *.zip
@@ -133,7 +133,7 @@ echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | 
 
 #################### SUBLIST3R ENUMERATION ######################
 
-python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt &> /dev/null
+python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt > /dev/null 2>&1
 
 if [ -f "sublister_output.txt" ]; then
         cat sublister_output.txt|anew|grep -v " "|grep -v "@" | grep "\." >> output/$cdir/sublister.txtls
@@ -150,29 +150,32 @@ findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew |grep -v " "|grep -v "@" | grep "\."| wc -l)\e[0m"
 
-#################### GATHERING ROOT DOMAINS ######################
-
-python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed '/^$/d' | grep -v " "|grep -v "@" | grep "\." >> rootdomain.txtls
-
 #################### DNSCAN ENUMERATION ######################
 
-python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnstemp.txtls &> /dev/null
+python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5000.txt -D -o output/$cdir/dnstemp.txtls > /dev/null 2>&1
 cat output/$cdir/dnstemp.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u | grep -v " "|grep -v "@" | grep "\." >>  output/$cdir/dnscan.txtls
 rm output/$cdir/dnstemp.txtls
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
 
+#################### CROBAT ENUMERATION ######################
+
+crobat -s $domain_name >> output/$cdir/crobat.txtls
+echo -e "\e[36mCrobat count: \e[32m$(cat output/$cdir/crobat.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
+cat output/$cdir/crobat.txtls | anew >> all.txtls
+
+#################### GATHERING ROOT DOMAINS ######################
+
+python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed '/^$/d' | grep -v " "|grep -v "@" | grep "\." >> rootdomain.txtls
+
 #################### SUBFINDER2 ENUMERATION ######################
 
-subfinder -dL rootdomain.txtls --silent >> output/$cdir/subfinder2.txtls 
+subfinder -dL rootdomain.txtls --silent -o output/$cdir/subfinder2.txtls > /dev/null 2>&1
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 | grep -v " "|grep -v "@" | grep "\." >> all.txtls
 cat output/$cdir/subfinder2.txtls | grep -v "/" | grep -v " "|grep -v "@" | grep "\."  >> all.txtls
 
-#################### CROBAT ENUMERATION ######################
 
-crobat -s rootdomain.txtls >> output/$cdir/crobat.txtls
-echo -e "\e[36mCrobat count: \e[32m$(cat output/$cdir/crobat.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
-cat output/$cdir/crobat.txtls | anew >> all.txtls
+#################### HOUSEKEEPING TASKS #########################
 
 mv rootdomain.txtls output/$cdir/
 echo "www.$domain_name" >> all.txtls
@@ -198,9 +201,9 @@ mv output/$cdir/resolved.new output/$cdir/resolved.txtls
 
 ############################################################################# FINDING LOGIN PORTALS  ##################################################################
 
-portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` &> /dev/null
+portlst=`naabu -l output/$cdir/$cdir.master -pf ports -silent | cut -d ":" -f2 | anew | tr "\n" "," | sed 's/.$//'` > /dev/null 2>&1
 
-httpx -silent -l output/$cdir/$cdir.master -p $portlst -mc 200 -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses/ -o output/$cdir/temp_live.txtls &> /dev/null
+httpx -silent -l output/$cdir/$cdir.master -p $portlst -fl 0 -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses/ -o output/$cdir/temp_live.txtls > /dev/null 2>&1
 
 cat output/$cdir/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$cdir/livesites.txtls
 
