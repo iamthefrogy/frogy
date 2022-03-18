@@ -1,8 +1,10 @@
 ##### RUN IT AS ROOT AND ENSURE YOU HAVE GO INSTALLED ON YOUR KALI MACHINE
 
+apt update
 apt install -y jq
 apt install -y whois
-sudo apt install -y libpcap-dev
+apt install -y libpcap-dev
+apt install -y golang
 chmod +x frogy.sh
 git clone https://github.com/aboul3la/Sublist3r.git
 git clone https://github.com/rbsec/dnscan.git
