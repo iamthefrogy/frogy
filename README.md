@@ -30,6 +30,7 @@ It has multiple use cases depending your organization's processes and technology
     
 + **Installation**
     ```sh
+  Login as root and run the below command.
   chmod +x install.sh
   ./install.sh
     ```
