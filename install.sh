@@ -8,7 +8,6 @@ apt install -y golang
 chmod +x frogy.sh
 git clone https://github.com/aboul3la/Sublist3r.git
 git clone https://github.com/rbsec/dnscan.git
-go install -v github.com/projectdiscovery/naabu/v2/cmd/naabu@latest
 go install -v github.com/tomnomnom/anew@latest
 go install -v github.com/tomnomnom/waybackurls@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
@@ -19,7 +18,7 @@ chmod +x findomain-linux
 mv findomain-linux /usr/bin/
 go install -v github.com/cgboal/sonarsearch/cmd/crobat@latest
 cd /root/go/bin
-cp anew httpx crobat subfinder naabu /usr/bin/
+cp anew httpx crobat subfinder /usr/bin/
 # kali user and ubuntu user
 apt install pip
 pip install -r dnscan/requirements.txt
