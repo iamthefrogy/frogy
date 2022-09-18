@@ -13,9 +13,11 @@ go install -v github.com/tomnomnom/waybackurls@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 apt install -y amass
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
-wget https://github.com/findomain/findomain/releases/latest/download/findomain-linux
-chmod +x findomain-linux
-mv findomain-linux /usr/bin/
+wget https://github.com/Findomain/Findomain/releases/download/8.2.1/findomain-linux.zip
+unzip findomain-linux.zip
+chmod +x findomain
+mv findomain /usr/bin/
+rm findomain-linux.zip
 go install -v github.com/cgboal/sonarsearch/cmd/crobat@latest
 cd /root/go/bin
 cp anew httpx waybackurls crobat subfinder /usr/bin/
