@@ -146,7 +146,7 @@ fi
 
 #################### FINDOMAIN ENUMERATION ######################
 
-findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
+findomain -t $domain_name -q >> output/$cdir/findomain.txtls
 cat output/$cdir/findomain.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew |grep -v " "|grep -v "@" | grep "\."| wc -l)\e[0m"
 
