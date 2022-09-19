@@ -10,6 +10,7 @@ git clone https://github.com/aboul3la/Sublist3r.git
 git clone https://github.com/rbsec/dnscan.git
 go install -v github.com/tomnomnom/anew@latest
 go install -v github.com/tomnomnom/waybackurls@latest
+go install github.com/tomnomnom/unfurl@latest
 go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest
 apt install -y amass
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -20,7 +21,7 @@ mv findomain /usr/bin/
 rm findomain-linux.zip
 go install -v github.com/cgboal/sonarsearch/cmd/crobat@latest
 cd /root/go/bin
-cp anew httpx waybackurls crobat subfinder /usr/bin/
+cp anew httpx waybackurls crobat subfinder unfurl /usr/bin/
 # kali user and ubuntu user
 apt install pip
 pip install -r dnscan/requirements.txt
