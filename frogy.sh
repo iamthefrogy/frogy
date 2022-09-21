@@ -69,17 +69,17 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
 	then
 		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
 		subfinder -d $domain_name --silent -o output/$cdir/subfinder.txtls > /dev/null 2>&1
-	        cat output/$cdir/subfinder.txtls >> all.txtls
+	        cat output/$cdir/subfinder.txtls | unfurl domains >> all.txtls
 	else
 		curl -s "$chaosvar" -O
 		unzip -qq *.zip
 		cat *.txt >> output/$cdir/chaos.txtls
-		cat output/$cdir/chaos.txtls >> all.txtls
+		cat output/$cdir/chaos.txtls | unfurl domains >> all.txtls
 		echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 		find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
 	        subfinder -dL subfinder.domains --silent -recursive -o output/$cdir/subfinder.txtls > /dev/null 2>&1
 		rm subfinder.domains
-		cat output/$cdir/subfinder.txtls >> all.txtls
+		cat output/$cdir/subfinder.txtls | unfurl domains >> all.txtls
 		rm *.zip
 		rm *.txt
 	fi
@@ -90,15 +90,15 @@ fi
 
 #################### AMASS ENUMERATION #############################
 
-amass enum -passive -norecursive -nolocaldb -noalts -d $domain_name >> output/$cdir/amass.txtls
-cat output/$cdir/amass.txtls | anew >> all.txtls
+amass enum -passive -d $domain_name -o output/$cdir/amass.txtls > /dev/null 2>&1
+cat output/$cdir/amass.txtls | unfurl domains | anew >> all.txtls
 echo -e "\e[36mAmaas count: \e[32m$(cat output/$cdir/amass.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 #################### WayBackEngine  ENUMERATION ######################
 # this code is taken from another open-source project at - https://github.com/bing0o/SubEnum/blob/master/subenum.sh
 
 curl -sk "http://web.archive.org/cdx/search/cdx?url=*."$domain_name"&output=txt&fl=original&collapse=urlkey&page=" | awk -F / '{gsub(/:.*/, "", $3); print $3}' | anew | sort -u >> output/$cdir/wayback.txtls
-cat output/$cdir/wayback.txtls >> all.txtls
+cat output/$cdir/wayback.txtls | unfurl domains >> all.txtls
 echo -e "\e[36mWaybackEngine count: \e[32m$(cat output/$cdir/wayback.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 #################### CERTIFICATE ENUMERATION ######################
@@ -121,26 +121,13 @@ else
         curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
 fi
-cat output/$cdir/whois.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
+cat output/$cdir/whois.txtls | unfurl domains | anew >> all.txtls
 echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
-
-#################### SUBLIST3R ENUMERATION ######################
-
-python3 Sublist3r/sublist3r.py -d $domain_name -o sublister_output.txt > /dev/null 2>&1
-
-if [ -f "sublister_output.txt" ]; then
-        cat sublister_output.txt|anew|grep -v " "|grep -v "@" | grep "\." >> output/$cdir/sublister.txtls
-        rm sublister_output.txt
-	cat output/$cdir/sublister.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
-	echo -e "\e[36mSublister count: \e[32m$(cat output/$cdir/sublister.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-else
-        echo -e "\e[36mSublister count: \e[32m0\e[0m"
-fi
 
 #################### FINDOMAIN ENUMERATION ######################
 
-findomain-linux -t $domain_name -q >> output/$cdir/findomain.txtls
-cat output/$cdir/findomain.txtls|anew|grep -v " "|grep -v "@" | grep "\." >> all.txtls
+findomain -t $domain_name -q >> output/$cdir/findomain.txtls
+cat output/$cdir/findomain.txtls | unfurl domains | anew >> all.txtls
 echo -e "\e[36mFindomain count: \e[32m$(cat output/$cdir/findomain.txtls | tr '[:upper:]' '[:lower:]'| anew |grep -v " "|grep -v "@" | grep "\."| wc -l)\e[0m"
 
 #################### DNSCAN ENUMERATION ######################
@@ -158,16 +145,14 @@ python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed
 
 subfinder -dL rootdomain.txtls --silent -o output/$cdir/subfinder2.txtls > /dev/null 2>&1
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
-cat output/$cdir/subfinder2.txtls | grep "/" | cut -d "/" -f3 | grep -v " "|grep -v "@" | grep "\." >> all.txtls
-cat output/$cdir/subfinder2.txtls | grep -v "/" | grep -v " "|grep -v "@" | grep "\."  >> all.txtls
-
+cat output/$cdir/subfinder2.txtls | unfurl domains | anew >> all.txtls
 
 #################### HOUSEKEEPING TASKS #########################
 
 mv rootdomain.txtls output/$cdir/
-echo "www.$domain_name" >> all.txtls
-echo "$domain_name" >> all.txtls
-cat all.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v "*." | grep -v " "|grep -v "@" | grep "\." >> $cdir.master
+echo "www.$domain_name" | unfurl domains >> all.txtls
+echo "$domain_name" | unfurl domains >> all.txtls
+cat all.txtls | tr '[:upper:]' '[:lower:]' | unfurl domains | anew >> $cdir.master
 mv $cdir.master output/$cdir/$cdir.master
 sed -i 's/<br>/\n/g' output/$cdir/$cdir.master
 rm all.txtls
