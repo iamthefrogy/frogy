@@ -54,17 +54,18 @@ It has multiple use cases depending your organization's processes and technology
 - :heavy_check_mark: Bug Fixed, for false positive reporting of domains and subdomains.
 - :heavy_check_mark: Searching domains through crt.sh via registered organization name from WHOIS instead of domain name created some garbage data. Filtered result to only grab domains and nothing else.
 - :heavy_check_mark: Now finds live websites on all standard/non-standard ports.
+- :heavy_check_mark: Removed sublister as it's abandoned project.
 - :heavy_check_mark: Now finds all websites with login portals. It also checks websites home page that redirects to login page automatically upon opening.
 - :heavy_check_mark: Now finds live web application based on top 1000 shodan http/https ports through facet analysis. Uses Naabu for fast port scan followed by httpx. (Credit: @nbk_2000)
 - :heavy_check_mark: Generate CSV (Root domains, Subdomains, Live sites, Login Portals)
 - :heavy_check_mark: Now provides output for resolved subdomains
 - :heavy_check_mark: Added WayBackEngine support from another project
-- :heavy_check_mark: Added BufferOver support from another project.
+- :heavy_check_mark: Removed BufferOver as it's now paid/freemium service.
 - :heavy_check_mark: Added Amass coverage.
 - :construction: Add docker support to avoid dependency issues.
 - :construction: Add progress bar for each main feature runnign so it shows some progress while running.
 - :construction: Reducing execution time by performing resolved asset's port discovery.
-- :heavy_check_mark: Add crobat support from Rapid7.
+- :heavy_check_mark: Removed crobat as it's deprecated.
   
 
 #### A very warm thanks to the authors of the tools used in this script.
