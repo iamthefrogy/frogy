@@ -101,13 +101,6 @@ curl -sk "http://web.archive.org/cdx/search/cdx?url=*."$domain_name"&output=txt&
 cat output/$cdir/wayback.txtls >> all.txtls
 echo -e "\e[36mWaybackEngine count: \e[32m$(cat output/$cdir/wayback.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
-################### BufferOver ENUMERATION #########################
-# this code is taken from another open-source project at - https://github.com/bing0o/SubEnum/blob/master/subenum.sh
-
-curl -s "https://dns.bufferover.run/dns?q=."$domain_name"" | grep $domain_name | awk -F, '{gsub("\"", "", $2); print $2}' | anew >> output/$cdir/bufferover.txtls
-cat output/$cdir/bufferover.txtls >> all.txtls
-echo -e "\e[36mBufferOver Count: \e[32m$(cat output/$cdir/bufferover.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-
 #################### CERTIFICATE ENUMERATION ######################
 
 registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(*Whois*|*whois*|*WHOIS*|*domains*|*DOMAINS*|*Domains*|*domain*|*DOMAIN*|*Domain*|*proxy*|*Proxy*|*PROXY*|*PRIVACY*|*privacy*|*Privacy*|*REDACTED*|*redacted*|*Redacted*|*DNStination*|*WhoisGuard*|*Protected*|*protected*|*PROTECTED*)')
@@ -156,12 +149,6 @@ python3 dnscan/dnscan.py -d %%.$domain_name -w wordlist/subdomains-top1million-5
 cat output/$cdir/dnstemp.txtls | grep $domain_name | egrep -iv ".(DMARC|spf|=|[*])" | cut -d " " -f1 | anew | sort -u | grep -v " "|grep -v "@" | grep "\." >>  output/$cdir/dnscan.txtls
 rm output/$cdir/dnstemp.txtls
 echo -e "\e[36mDnscan: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
-
-#################### CROBAT ENUMERATION ######################
-
-crobat -s $domain_name >> output/$cdir/crobat.txtls
-echo -e "\e[36mCrobat count: \e[32m$(cat output/$cdir/crobat.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
-cat output/$cdir/crobat.txtls | anew >> all.txtls
 
 #################### GATHERING ROOT DOMAINS ######################
 
