@@ -6,7 +6,6 @@ apt install -y whois
 apt install -y libpcap-dev
 apt install -y golang
 chmod +x frogy.sh
-git clone https://github.com/aboul3la/Sublist3r.git
 git clone https://github.com/rbsec/dnscan.git
 go install -v github.com/tomnomnom/anew@latest
 go install -v github.com/tomnomnom/waybackurls@latest
@@ -19,9 +18,8 @@ unzip findomain-linux.zip
 chmod +x findomain
 mv findomain /usr/bin/
 rm findomain-linux.zip
-go install -v github.com/cgboal/sonarsearch/cmd/crobat@latest
 cd /root/go/bin
-cp anew httpx waybackurls crobat subfinder unfurl /usr/bin/
+cp anew httpx waybackurls subfinder unfurl /usr/bin/
 # kali user and ubuntu user
 apt install pip
 pip install -r dnscan/requirements.txt
