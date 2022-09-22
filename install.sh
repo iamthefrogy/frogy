@@ -22,5 +22,5 @@ cd /root/go/bin
 cp anew httpx waybackurls subfinder unfurl /usr/bin/
 # kali user and ubuntu user
 apt install pip
+git clone https://github.com/rbsec/dnscan.git
 pip install -r dnscan/requirements.txt
-pip install -r Sublist3r/requirements.txt
