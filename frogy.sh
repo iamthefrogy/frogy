@@ -159,66 +159,26 @@ rm all.txtls
 
 
 #################### SUBDOMAIN RESOLVER ######################
-
+echo "Domain,IP" >> resolved.csv
 while read d || [[ -n $d ]]; do
   ip=$(dig +short $d|grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"|head -1)
   if [ -n "$ip" ]; then
-    echo "$d,$ip" >>output/$cdir/resolved.txtls
+    echo "$d,$ip" >>output/$cdir/resolved.csv
   else
-    echo "$d,Can't Resolve" >>output/$cdir/resolved.txtls
+    echo "$d,Can't Resolve" >>output/$cdir/resolved.csv
   fi
 done <output/$cdir/$cdir.master
-sort output/$cdir/resolved.txtls | uniq > output/$cdir/resolved.new
-mv output/$cdir/resolved.new output/$cdir/resolved.txtls
+sort output/$cdir/resolved.csv | uniq > output/$cdir/resolved_new.csv
+mv output/$cdir/resolved_new.csv output/$cdir/resolved.csv
 
-############################################################################# FINDING LOGIN PORTALS  ##################################################################
+############################################################################# PERFORMING WEB DISCOVERY  ##################################################################
 
-httpx -silent -l output/$cdir/$cdir.master -p 80,81,82,88,135,143,300,443,554,591,593,832,902,981,993,1010,1024,1311,2077,2079,2082,2083,2086,2087,2095,2096,2222,2480,3000,3128,3306,3333,3389,4243,4443,4567,4711,4712,4993,5000,5001,5060,5104,5108,5357,5432,5800,5985,6379,6543,7000,7170,7396,7474,7547,8000,8001,8008,8014,8042,8069,8080,8081,8083,8085,8088,8089,8090,8091,8118,8123,8172,8181,8222,8243,8280,8281,8333,8443,8500,8834,8880,8888,8983,9000,9043,9060,9080,9090,9091,9100,9200,9443,9800,9981,9999,10000,10443,12345,12443,16080,18091,18092,20720,28017,49152 -fl 0 -include-chain -store-chain -sc -tech-detect -server -title -cdn -cname -probe -srd output/$cdir/raw_http_responses/ -o output/$cdir/temp_live.txtls > /dev/null 2>&1
+httpx -fr -nc -silent -l output/$cdir/$cdir.master -p 80,81,82,88,135,143,300,443,554,591,593,832,902,981,993,1010,1024,1311,2077,2079,2082,2083,2086,2087,2095,2096,2222,2480,3000,3128,3306,3333,3389,4243,4443,4567,4711,4712,4993,5000,5001,5060,5104,5108,5357,5432,5800,5985,6379,6543,7000,7170,7396,7474,7547,8000,8001,8008,8014,8042,8069,8080,8081,8083,8085,8088,8089,8090,8091,8118,8123,8172,8181,8222,8243,8280,8281,8333,8443,8500,8834,8880,8888,8983,9000,9043,9060,9080,9090,9091,9100,9200,9443,9800,9981,9999,10000,10443,12345,12443,16080,18091,18092,20720,28017,49152 -csv -o output/$cdir/web_intelligence.csv > /dev/null 2>&1
 
-cat output/$cdir/temp_live.txtls | grep SUCCESS | cut -d "[" -f1 >> output/$cdir/livesites.txtls
-
-cat output/$cdir/temp_live.txtls | grep SUCCESS >> output/$cdir/technology.txtls
-
-rm -f output/$cdir/temp_live.txtls
-
-while read lf; do
-        loginfound=`curl -s -L $lf | grep 'type="password"'`
-        if [ -z "$loginfound" ]
-                then
-                :
-        else
-                echo "$lf" >> output/$cdir/loginfound.txtls
-        fi
-
-done <output/$cdir/livesites.txtls
-
-
-echo -e "\e[93mTotal live websites (on all available ports) found: \e[32m$(cat output/$cdir/livesites.txtls | tr '[:upper:]' '[:lower:]' | anew | wc -l)\e[0m"
-
-if [[ -f "output/$cdir/loginfound.txtls" ]]
-	then
-		echo -e "\e[93mTotal login portals found: \e[32m$(cat output/$cdir/loginfound.txtls | tr '[:upper:]' '[:lower:]' | anew| wc -l)\e[0m"
-	else
-		echo -e "\e[93mTotal login portals found: \e[32m0\e[0m"
-fi
-
-echo -e "\e[36mFinal output has been generated in the output/$cdir/ folder: \e[32moutput.csv\e[0m"
-
-cat output/$cdir/resolved.txtls | cut -d ',' -f1 >> temp1.txt
-cat output/$cdir/resolved.txtls | cut -d ',' -f2 >> temp2.txt
-
-if [ -f output/$cdir/loginfound.txtls ]; then
-	paste -d ','  output/$cdir/rootdomain.txtls temp1.txt temp2.txt output/$cdir/livesites.txtls output/$cdir/loginfound.txtls | sed '1 i \Root Domain,Subdomain,IP Address,Live Website,Login Portals' > output/$cdir/output.csv
-
-else
-	paste -d ','  output/$cdir/rootdomain.txtls temp1.txt temp2.txt output/$cdir/livesites.txtls | sed '1 i \Root Domain,Subdomain,IP Address,Live Website' > output/$cdir/output.csv
-fi
-rm temp1.txt temp2.txt
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
-echo -e "\e[93mTotal unique resolved subdomains found: \e[32m$(cat output/$cdir/resolved.txtls | grep -v "Can't" | wc -l) \e[0m"
+echo -e "\e[93mTotal unique resolved subdomains found: \e[32m$(cat output/$cdir/resolved.csv | grep -v "Can't" | wc -l) \e[0m"
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]'|anew | wc -l)\e[0m"
+echo -e "\e[93mWeb discovery is located in folder: \e[32moutput/$cdir/\e[0m"
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
 mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
-mv output/$cdir/raw_output/resolved.txtls output/$cdir/
-mv output/$cdir/raw_output/livesites.txtls output/$cdir/
