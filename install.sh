@@ -1,6 +1,5 @@
 ##### RUN IT AS ROOT AND ENSURE YOU HAVE GO INSTALLED ON YOUR KALI MACHINE
-if [[ whoami != root ]]
-then 
+if [ `whoami` != 'root' ];then
     echo -e "\033[1;91m"
     echo -e "\t\t\t!! Run with sudo !! " 
     exit 
