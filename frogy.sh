@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo -e "\033[0;92m"
 echo -e "
            .,;::::,..      ......      .,:llllc;'.
         .cxdolcccloddl;:looooddooool::xxdlc:::clddl.
