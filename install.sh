@@ -5,16 +5,15 @@ if [ `whoami` != 'root' ];then
     exit 
 fi
 
-
+echo "Installing tools..."
 apt-get -qq update
-apt-get -qq install pip jq whois amass libpcap-dev -y 
-echo "Done with apt tools :) "
+apt-get -qq install pip jq whois amass libpcap-dev unzip -y 
 chmod +x frogy.sh
 git clone https://github.com/rbsec/dnscan.git 2>/dev/null 
 pip -qq install -r dnscan/requirements.txt 
 
 function project_discovery(){
-    case $(arch) in         
+    case $(arch) in
         x86_64)
             cpu='amd64'
             ;;
@@ -29,7 +28,7 @@ function project_discovery(){
             ;;
         esac
 
-    for tool in {httpx,subfinder}
+    for tool in {httpx,subfinder,dnsx,katana}
     do
         version=$(curl -IkLs -o /dev/null -w %{url_effective}  https://github.com/projectdiscovery/$tool/releases/latest|grep -o "[^/]*$"| sed "s/v//g")
         baseurl="https://github.com/projectdiscovery/$tool/releases/download/v$version/"$tool"_$version"_linux_"$cpu.zip"
@@ -96,5 +95,4 @@ project_discovery
 tomnomnom
 find_domain
 
-echo "Installation Done "
-
+echo "Installation completed successfully!"
