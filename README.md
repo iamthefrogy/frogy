@@ -37,17 +37,19 @@ It has multiple use cases depending your organization's processes and technology
     ```sh
     ./frogy.sh
     ```
-+ **Demo**
-    <br/><img src="https://user-images.githubusercontent.com/8291014/148625824-0760f6fe-6d8f-4217-85e7-1432388b1ee9.png" alt="Frogy" title="Frogy" height=600px />
-
++ **Demo Scenario 1**
+Use frogy.sh when you want to start discovery for any new target and you just have their one primary domain. <br/>
+    <br/><img src="https://github.com/iamthefrogy/frogy/assets/8291014/2ff88fa4-29d0-4811-aca6-6fb79158c523" alt="Frogy" title="Frogy" height=600px />
+    
++ **Demo Scenario 2**
+Use automate.sh when you have many primary domains in single list.txt file and you want to run frogy on script on all of them one by one. <br/>
+<br/><img src="https://github.com/iamthefrogy/frogy/assets/8291014/26ad8c10-eb8d-4c91-ae49-bb09cd85ee51" alt="Frogy" title="Frogy" height=600px />
+    
 + **Output**
     ```
     Output file will be saved inside the output/company_name/webometry.csv folder. Where company_name is any company name which you give as an input to 'Organization Name' at the start of the script.
     ```
 #### A very warm thanks to the authors of the tools used in this script.
-Initial repo created - A few weeks back below date.<br/>
-Date - 4 March 2019, Open-sourced<br/>
-Date - 19 March 2021, Major changes<br/>
 
 Warning/Disclaimer: Read the detailed disclaimer at my blog - https://github.com/iamthefrogy/Disclaimer-Warning/blob/main/README.md <br/>
 Logo credit - www.designevo.com
