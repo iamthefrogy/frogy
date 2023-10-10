@@ -42,7 +42,7 @@ It has multiple use cases depending your organization's processes and technology
 
 + **Output**
     ```
-    Output file will be saved inside the output/company_name/outut.csv folder. Where company_name is any company name which you give as an input to 'Organization Name' at the start of the script.
+    Output file will be saved inside the output/company_name/wrbometry.csv folder. Where company_name is any company name which you give as an input to 'Organization Name' at the start of the script.
     ```
 #### A very warm thanks to the authors of the tools used in this script.
 Initial repo created - A few weeks back below date.<br/>
