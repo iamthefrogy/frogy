@@ -53,7 +53,7 @@ function tomnomnom(){
         ;;
     esac
 
-    for tool in {anew,waybackurls,unfurl}
+    for tool in {anew,waybackurls}
     do
         version=$(curl -IkLs -o /dev/null -w %{url_effective}  https://github.com/tomnomnom/$tool/releases/latest|grep -o "[^/]*$"| sed "s/v//g")
         baseurl="https://github.com/tomnomnom/$tool/releases/download/v$version/$tool-linux-$cpu-$version.tgz"        
