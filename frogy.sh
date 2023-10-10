@@ -47,13 +47,13 @@ then
         echo -e "\e[94mCreating $org directory in the 'output' folder...\e[0m"
         rm -r -f output/$cdir
         mkdir output/$cdir
-	mkdir output/$cdir/raw_output
-	mkdir output/$cdir/raw_output/raw_http_responses
+        mkdir output/$cdir/raw_output
+        mkdir output/$cdir/raw_output/raw_http_responses
 else
         echo -e "\e[94mCreating $org directory in the 'output' folder... \e[0m"
         mkdir output/$cdir
-	mkdir output/$cdir/raw_output
-	mkdir output/$cdir/raw_output/raw_http_responses
+        mkdir output/$cdir/raw_output
+        mkdir output/$cdir/raw_output/raw_http_responses
 fi
 
 ############################################################### Subdomain enumeration ######################################################################
@@ -66,33 +66,33 @@ echo -n "Is this program is in the CHAOS dataset? (y/n)? "
 read answer
 if [ "$answer" != "${answer#[Yy]}" ] ;then
         curl -s https://chaos-data.projectdiscovery.io/index.json -o index.json
-	chaosvar=`cat index.json | grep -w $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | xargs`
-	if [ -z "$chaosvar" ]
-	then
-		echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
-		subfinder -d $domain_name --silent -o output/$cdir/subfinder.txtls > /dev/null 2>&1
-	        cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
-	else
-		curl -s "$chaosvar" -O
-		unzip -qq *.zip
-		cat *.txt >> output/$cdir/chaos.txtls
-		cat output/$cdir/chaos.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
-		echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-		find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-	        subfinder -dL subfinder.domains --silent -recursive -o output/$cdir/subfinder.txtls > /dev/null 2>&1
-		rm subfinder.domains
-		cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
-		rm *.zip
-		rm *.txt
-	fi
+        chaosvar=`cat index.json | grep -w $cdir | grep "URL" | sed 's/"URL": "//;s/",//' | xargs`
+        if [ -z "$chaosvar" ]
+        then
+                echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
+                subfinder -d $domain_name --silent -o output/$cdir/subfinder.txtls > /dev/null 2>&1
+                cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
+        else
+                curl -s "$chaosvar" -O
+                unzip -qq *.zip
+                cat *.txt >> output/$cdir/chaos.txtls
+                cat output/$cdir/chaos.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
+                echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+                find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
+                subfinder -dL subfinder.domains --silent -recursive -o output/$cdir/subfinder.txtls > /dev/null 2>&1
+                rm subfinder.domains
+                cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
+                rm *.zip
+                rm *.txt
+        fi
         rm index.json*
 else
-	:
+        :
 fi
 
 ##################### AMASS ENUMERATION #############################
 
-#amass enum -d $domain_name -o output/$cdir/amass.txtls 
+#amass enum -d $domain_name -o output/$cdir/amass.txtls
 #echo "Amass execution completed........--------------------------------------------------"
 #cat output/$cdir/amass.txtls | awk '$2 == "(FQDN)" && $1 ~ /$csn/ { print $1 }' | sort -u >> amass2.txtls
 #cat amass2.txtls >> all.txtls
@@ -144,6 +144,12 @@ python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed
 subfinder -dL rootdomain.txtls --silent -o output/$cdir/subfinder2.txtls > /dev/null 2>&1
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
+
+#################### DNSCAN ENUMERATION ######################
+
+python3 dnscan/dnscan.py -d $domain_name -w dnscan/subdomains-10000.txt -o output/$cdir/dns_temp.txtls > /dev/null 2>&1
+awk -v domain="$domain_name" '/^\[\*\] Scanning / && $0 ~ domain && / for A records$/ {flag=1; next} flag {print $NF}' output/$cdir/dns_temp.txtls | anew > output/$cdir/dnscan.txtls
+echo -e "\e[36mDnscan count: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 
 #################### HOUSEKEEPING TASKS #########################
 
