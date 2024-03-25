@@ -92,13 +92,13 @@ fi
 
 ##################### AMASS ENUMERATION #############################
 
-#amass enum -d $domain_name -passive -norecursive -nocolor -o output/$cdir/amass.txtls
-#echo "Amass execution completed........--------------------------------------------------"
-#cat output/$cdir/amass.txtls | awk '$2 == "(FQDN)" && $1 ~ /$csn/ { print $1 }' | sort -u >> amass2.txtls
-#cat amass2.txtls >> all.txtls
-#echo -e "\e[36mAmaas count: \e[32m$(cat amass2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-#rm output/$cdir/amass.txtls
-#mv amass2.txtls amass.txtls
+amass enum -d $domain_name -passive -norecursive -nocolor -o output/$cdir/amass.txtls
+echo "Amass execution completed........--------------------------------------------------"
+cat output/$cdir/amass.txtls | awk '$2 == "(FQDN)" && $1 ~ /$csn/ { print $1 }' | sort -u >> amass2.txtls
+cat amass2.txtls >> all.txtls
+echo -e "\e[36mAmaas count: \e[32m$(cat amass2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+rm output/$cdir/amass.txtls
+mv amass2.txtls amass.txtls
 
 #################### WayBackEngine  ENUMERATION ######################
 # this code is taken from another open-source project at - https://github.com/bing0o/SubEnum/blob/master/subenum.sh
