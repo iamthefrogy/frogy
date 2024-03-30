@@ -90,34 +90,42 @@ else
         :
 fi
 
+##################### AMASS ENUMERATION #############################
+
+#amass enum -d $domain_name -silent -trqps 5 -dns-qps 5 -norecursive -nocolor -o output/$cdir/amass.txtls /dev/null 2>&1
+#echo "Amass execution completed........--------------------------------------------------"
+#cat output/$cdir/amass.txtls | awk '$2 == "(FQDN)" && $1 ~ /$csn/ { print $1 }' | sort -u >> amass2.txtls
+#cat amass2.txtls >> all.txtls
+#echo -e "\e[36mAmaas count: \e[32m$(cat amass2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
+#rm output/$cdir/amass.txtls
+#mv amass2.txtls amass.txtls
+
 #################### WayBackEngine  ENUMERATION ######################
-# this code is taken from another open-source project at - https://github.com/bing0o/SubEnum/blob/master/subenum.sh
 
 curl -sk "http://web.archive.org/cdx/search/cdx?url=*."$domain_name"&output=txt&fl=original&collapse=urlkey&page=" | awk -F / '{gsub(/:.*/, "", $3); print $3}' | anew | sort -u >> output/$cdir/wayback.txtls
 cat output/$cdir/wayback.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
 echo -e "\e[36mWaybackEngine count: \e[32m$(cat output/$cdir/wayback.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 #################### CERTIFICATE ENUMERATION ######################
-### AS CERT.SH IS DOWN I AM COMMENTIG THIS CODE #####
-#registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED)')
-#if [ -z "$registrant" ]
-#then
-#        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
-#else
-#        curl -s "https://crt.sh/?q=$registrant" | grep -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
-#        curl -s "https://crt.sh/?q=$domain_name&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
-#fi
+registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED)')
+if [ -z "$registrant" ]
+then
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+else
+        curl -s "https://crt.sh/?q=$registrant" | grep -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
+        curl -s "https://crt.sh/?q=$domain_name&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+fi
 
-#registrant2=$(whois $domain_name | grep "Registrant Organisation" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED)')
-#if [ -z "$registrant2" ]
-#then
-#        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
-#else
-#        curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
-#        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
-#fi
-#cat output/$cdir/whois.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
-#echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
+registrant2=$(whois $domain_name | grep "Registrant Organisation" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED)')
+if [ -z "$registrant2" ]
+then
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+else
+        curl -s "https://crt.sh/?q="$registrant2"" | grep -a -P -i '<TD>([a-zA-Z]+(\.[a-zA-Z]+)+)</TD>' | sed -e 's/^[ \t]*//' | cut -d ">" -f2 | cut -d "<" -f1 | anew >> output/$cdir/whois.txtls
+        curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
+fi
+cat output/$cdir/whois.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
+echo -e "\e[36mCertificate search count: \e[32m$(cat output/$cdir/whois.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\." | wc -l)\e[0m"
 
 #################### FINDOMAIN ENUMERATION ######################
 
@@ -135,11 +143,10 @@ subfinder -dL rootdomain.txtls --silent -o output/$cdir/subfinder2.txtls > /dev/
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
 
-#################### DNSCAN ENUMERATION ######################
-
-python3 dnscan/dnscan.py -d $domain_name -w dnscan/subdomains-10000.txt -o output/$cdir/dns_temp.txtls > /dev/null 2>&1
-awk -v domain="$domain_name" '/^\[\*\] Scanning / && $0 ~ domain && / for A records$/ {flag=1; next} flag {print $NF}' output/$cdir/dns_temp.txtls | anew > output/$cdir/dnscan.txtls
-echo -e "\e[36mDnscan count: \e[32m$(cat output/$cdir/dnscan.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
+#################### BBOT ENUMERATION ######################
+bbot -t $domain_name -f subdomain-enum  -rf passive -o output -n $org -y > /dev/null 2>&1
+echo -e "\e[36mBbot count: \e[32m$(cat output/$cdir/subdomains.txt | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
+cat output/$cdir/subdomains.txt | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
 
 #################### HOUSEKEEPING TASKS #########################
 
