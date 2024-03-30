@@ -94,5 +94,5 @@ function find_domain(){
 project_discovery
 tomnomnom
 find_domain
-
+pipx install bbot
 echo "Installation completed successfully!"
