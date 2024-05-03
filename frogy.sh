@@ -166,9 +166,9 @@ cat output/$cdir/resolved.json | jq . | grep host | cut -d " " -f4 | cut -d '"' 
 
 ############################################################################# PERFORMING WEB DISCOVERY  ##################################################################
 
-httpx -silent -l live.assets -p 80,443,81,82,88,135,143,300,554,591,593,832,902,981,993,1010,1024,1311,2077,2079,2082,2083,2086,2087,2095,2096,2222,2480,3000,3128,3306,3333,3389,4243,4443,4567,4711,4712,4993,5000,5001,5060,5104,5108,5357,5432,5800,5985,6379,6543,7000,7170,7396,7474,7547,8000,8001,8008,8014,8042,8069,8080,8081,8083,8085,8088,8089,8090,8091,8118,8123,8172,8181,8222,8243,8280,8281,8333,8443,8500,8834,8880,8888,8983,9000,9043,9060,9080,9090,9091,9100,9200,9443,9800,9981,9999,10000,10443,12345,12443,16080,18091,18092,20720,28017,49152 -nc -j | jq -r '[.input, .url, .status_code, .port, .host, .title, .webserver, (.tech // [] | join(", ")), .content_type, .content_length, (.a // [] | join(", ")) , (.cname // [] | join(", "))] | @csv' > op2.json && (echo 'Domain_Name,Application_URL,Status_Code,Port,Host,Title,Webserver,Technology,Content_Type,Content_Length,A_record,CNAME'; cat op2.json) > output/$cdir/webometry.csv
-rm op*.json
-cat output/$cdir/webometry.csv| cut -d ',' -f2 | grep -v 'Application_URL' | anew > output/$cdir/site_list.txtls
+httpx -silent -l live.assets -o webometry -oa > /dev/null 2>&1
+cat webometry.csv| cut -d ',' -f10 | anew > output/$cdir/site_list.txtls
+mv webometry* output/$cdir/
 
 ##GENERATE SUMMARY##
 
