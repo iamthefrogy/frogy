@@ -94,5 +94,6 @@ function find_domain(){
 project_discovery
 tomnomnom
 find_domain
+apt install pipx
 pipx install bbot
 echo "Installation completed successfully!"
