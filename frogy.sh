@@ -90,16 +90,6 @@ else
         :
 fi
 
-##################### AMASS ENUMERATION #############################
-
-#amass enum -d $domain_name -silent -trqps 5 -dns-qps 5 -norecursive -nocolor -o output/$cdir/amass.txtls /dev/null 2>&1
-#echo "Amass execution completed........--------------------------------------------------"
-#cat output/$cdir/amass.txtls | awk '$2 == "(FQDN)" && $1 ~ /$csn/ { print $1 }' | sort -u >> amass2.txtls
-#cat amass2.txtls >> all.txtls
-#echo -e "\e[36mAmaas count: \e[32m$(cat amass2.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
-#rm output/$cdir/amass.txtls
-#mv amass2.txtls amass.txtls
-
 #################### WayBackEngine  ENUMERATION ######################
 
 curl -sk "http://web.archive.org/cdx/search/cdx?url=*."$domain_name"&output=txt&fl=original&collapse=urlkey&page=" | awk -F / '{gsub(/:.*/, "", $3); print $3}' | anew | sort -u >> output/$cdir/wayback.txtls
