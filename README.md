@@ -17,7 +17,7 @@ My goal is to create an open-source Attack Surface Management solution and make 
 It has multiple use cases depending your organization's processes and technology landscpae.
 
 **Logic** <br/>
-<img src="https://user-images.githubusercontent.com/8291014/196818780-7335b67d-1fc2-4b19-9e46-0e7813fbd8ee.jpg" alt="Frogy" title="Frogy" />
+<img src="https://i.ibb.co/XLw2KcS/Frogy-Subdomain-Enum.jpg" alt="Frogy" title="Frogy" />
 
 **Features**
 - :frog: Horizontal subdomain enumeration
