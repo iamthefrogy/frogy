@@ -39,7 +39,7 @@ It has multiple use cases depending your organization's processes and technology
     ```
 + **Demo Scenario 1**
 Use frogy.sh when you want to start discovery for any new target and you just have their one primary domain. <br/>
-    <br/><img src="https://github.com/iamthefrogy/frogy/assets/8291014/2ff88fa4-29d0-4811-aca6-6fb79158c523" alt="Frogy" title="Frogy" height=600px />
+    <br/><img src="https://i.ibb.co/C7sY3pY/2024-05-12-00-09-32-root-frogy-mark4-frogy.png" alt="Frogy" title="Frogy" height=600px />
     
 + **Output**
     ```
