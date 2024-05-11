@@ -92,4 +92,5 @@ project_discovery
 find_domain
 tomnomnom
 pipx install bbot
+cp /root/.local/pipx/venvs/bbot/bin/bbot /usr/bin/
 echo "Installation completed successfully!"
