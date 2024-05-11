@@ -9,8 +9,6 @@ echo "Installing tools..."
 apt-get -qq update
 apt install whois jq pip unzip pipx
 chmod +x frogy.sh
-git clone https://github.com/rbsec/dnscan.git 2>/dev/null 
-pip -qq install -r dnscan/requirements.txt 
 
 function project_discovery(){
     case $(arch) in
@@ -64,8 +62,34 @@ function tomnomnom(){
     done
 }
 
+function find_domain(){
+    case $(arch) in         
+    x86_64)
+        cpu='-linux'
+        ;;
+    i686 | i386)
+        #calling i386 function
+        cpu='-linux-i386'
+        ;;
+    aarch64)
+        #calling aarch function
+        cpu='-aarch64'
+        ;;
+    *)
+        cpu='-linux'
+        ;;
+    esac
+    findomain_version=$(curl -IkLs -o /dev/null -w %{url_effective}  https://github.com/Findomain/Findomain/releases/latest|grep -o "[^/]*$"| sed "s/v//g")
+    baseurl="https://github.com/Findomain/Findomain/releases/download/$findomain_version/findomain$cpu.zip"
+    wget -q $baseurl -O findomain.zip 
+    unzip -qo findomain.zip 
+    chmod +x findomain && mv findomain /usr/bin/
+    rm findomain.zip  
+}
+
 #Calling functions to downlaod binary file & move to /usr/bin
 project_discovery
+find_domain
 tomnomnom
 pipx install bbot
 echo "Installation completed successfully!"
