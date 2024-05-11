@@ -7,7 +7,8 @@ fi
 
 echo "Installing tools..."
 apt-get -qq update
-apt-get -qq install pip jq whois amass libpcap-dev unzip -y 
+apt install pip
+apt install unzip
 chmod +x frogy.sh
 git clone https://github.com/rbsec/dnscan.git 2>/dev/null 
 pip -qq install -r dnscan/requirements.txt 
