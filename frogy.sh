@@ -134,7 +134,7 @@ echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '
 cat output/$cdir/subfinder2.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
 
 #################### BBOT ENUMERATION ######################
-bbot -t $domain_name -f subdomain-enum  -rf passive -o output -n $org -y > /dev/null 2>&1
+bbot -t $domain_name -f subdomain-enum  -rf passive -o output -n $cdir -y > /dev/null 2>&1
 echo -e "\e[36mBbot count: \e[32m$(cat output/$cdir/subdomains.txt | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subdomains.txt | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
 
