@@ -158,17 +158,24 @@ cat output/$cdir/resolved.json | jq . | grep host | cut -d " " -f4 | cut -d '"' 
 
 httpx -silent -l live.assets -p 80,443,7547,8089,8085,8443,8080,4567,8008,8000,8081,2087,1024,2083,2082,2086,8888,5985,9080,81,21,8880,5000,7170,3000,8082,9000,5001,3128,8090,8001,7777,9306,10443,9090,8800,10000,88,9999,4433,82,4443,9100,9443,8083,5555,5357,4444,49152,6443 -o webometry -oa > /dev/null 2>&1
 cat webometry.csv| cut -d ',' -f10 | anew > output/$cdir/site_list.txtls
+cp output/$cdir/site_list.txtls .
+mv site_list.txtls urls.txt
 mv webometry* output/$cdir/
 
+./loginlocator.sh > /dev/null 2>&1
+
+mv output.csv login.csv
 ##GENERATE SUMMARY##
 
 echo -e "\e[93mTotal unique root domains found: \e[32m$(cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' |anew | wc -l)\e[0m"
 echo -e "\e[93mTotal unique subdomains found: \e[32m$(cat output/$cdir/$cdir.master | tr '[:upper:]' '[:lower:]'| anew  | wc -l)\e[0m"
 echo -e "\e[93mTotal unique resolved subdomains found: \e[32m$(cat live.assets | wc -l) \e[0m"
 echo -e "\e[93mTotal unique web applications found: \e[32m$(cat output/$cdir/site_list.txtls | tr '[:upper:]' '[:lower:]' |anew | wc -l)\e[0m"
+echo -e "\e[93mTotal unique login interfaces found: \e[32m$( cat login.csv| cut -d "," -f2 | grep "Yes" | wc -l)\e[0m"
+mv login.csv output/$cdir/
 cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
 
 ##HOUSE KEEEPING STUFF##
 mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
-rm live.assets
+rm live.assets response.html urls.txt
