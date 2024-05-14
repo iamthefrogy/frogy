@@ -93,4 +93,7 @@ find_domain
 tomnomnom
 pipx install bbot
 cp /root/.local/pipx/venvs/bbot/bin/bbot /usr/bin/
+wget https://raw.githubusercontent.com/iamthefrogy/LoginLocator/main/loginlocator.sh
+chmod 777 loginlocator.sh
+rm *.md
 echo "Installation completed successfully!"
