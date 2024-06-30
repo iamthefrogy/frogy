@@ -178,4 +178,4 @@ cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
 ##HOUSE KEEEPING STUFF##
 mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
-rm live.assets  urls.txt
+rm live.assets response.html urls.txt
