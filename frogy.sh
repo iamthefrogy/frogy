@@ -97,7 +97,7 @@ cat output/$cdir/wayback.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}
 echo -e "\e[36mWaybackEngine count: \e[32m$(cat output/$cdir/wayback.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
 
 #################### CERTIFICATE ENUMERATION ######################
-registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED)')
+registrant=$(whois $domain_name | grep "Registrant Organization" | cut -d ":" -f2 | xargs| sed 's/,/%2C/g' | sed 's/ /+/g'| egrep -v '(Whois|whois|WHOIS|domains|DOMAINS|Domains|domain|DOMAIN|Domain|proxy|Proxy|PROXY|PRIVACY|privacy|Privacy|REDACTED|redacted|Redacted|DNStination|WhoisGuard|Protected|protected|PROTECTED|Registration Private|REGISTRATION PRIVATE|registration private)')
 if [ -z "$registrant" ]
 then
         curl -s "https://crt.sh/?q="$domain_name"&output=json" | jq -r ".[].name_value" | sed 's/*.//g' | anew >> output/$cdir/whois.txtls
@@ -157,7 +157,7 @@ cat output/$cdir/resolved.json | jq . | grep host | cut -d " " -f4 | cut -d '"' 
 ############################################################################# PERFORMING WEB DISCOVERY  ##################################################################
 
 httpx -silent -l live.assets -p 80,443,7547,8089,8085,8443,8080,4567,8008,8000,8081,2087,1024,2083,2082,2086,8888,5985,9080,81,21,8880,5000,7170,3000,8082,9000,5001,3128,8090,8001,7777,9306,10443,9090,8800,10000,88,9999,4433,82,4443,9100,9443,8083,5555,5357,4444,49152,6443 -o webometry -oa > /dev/null 2>&1
-cat webometry.csv| cut -d ',' -f10 | anew > output/$cdir/site_list.txtls
+cat webometry.csv| cut -d ',' -f11 | anew > output/$cdir/site_list.txtls
 cp output/$cdir/site_list.txtls .
 mv site_list.txtls urls.txt
 mv webometry* output/$cdir/
@@ -178,4 +178,4 @@ cat output/$cdir/rootdomain.txtls | tr '[:upper:]' '[:lower:]' | anew
 ##HOUSE KEEEPING STUFF##
 mv output/$cdir/*.txtls output/$cdir/raw_output
 mv output/$cdir/raw_output/rootdomain.txtls output/$cdir/
-rm live.assets response.html urls.txt
+rm live.assets  urls.txt
