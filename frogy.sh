@@ -70,7 +70,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
         if [ -z "$chaosvar" ]
         then
                 echo -e "\e[36mSorry! could not find data in CHAOS DB...\e[0m"
-                subfinder -d $domain_name --silent -o output/$cdir/subfinder.txtls > /dev/null 2>&1
+                subfinder -d $domain_name --silent -all -o output/$cdir/subfinder.txtls > /dev/null 2>&1
                 cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
         else
                 curl -s "$chaosvar" -O
@@ -79,7 +79,7 @@ if [ "$answer" != "${answer#[Yy]}" ] ;then
                 cat output/$cdir/chaos.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
                 echo -e "\e[36mChaos count: \e[32m$(cat output/$cdir/chaos.txtls | tr '[:upper:]' '[:lower:]'| anew | wc -l)\e[0m"
                 find . | grep .txt | sed 's/.txt//g' | cut -d "/" -f2 | grep  '\.' >> subfinder.domains
-                subfinder -dL subfinder.domains --silent -recursive -o output/$cdir/subfinder.txtls > /dev/null 2>&1
+                subfinder -dL subfinder.domains --silent -recursive -all -o output/$cdir/subfinder.txtls > /dev/null 2>&1
                 rm subfinder.domains
                 cat output/$cdir/subfinder.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' >> all.txtls
                 rm *.zip
@@ -129,7 +129,7 @@ python3 rootdomain.py | cut -d " " -f7 | tr '[:upper:]' '[:lower:]' | anew | sed
 
 #################### SUBFINDER2 ENUMERATION ######################
 
-subfinder -dL rootdomain.txtls --silent -o output/$cdir/subfinder2.txtls > /dev/null 2>&1
+subfinder -dL rootdomain.txtls --silent -all -o output/$cdir/subfinder2.txtls > /dev/null 2>&1
 echo -e "\e[36mSubfinder count: \e[32m$(cat output/$cdir/subfinder2.txtls | tr '[:upper:]' '[:lower:]'| anew | grep -v " "|grep -v "@" | grep "\."  | wc -l)\e[0m"
 cat output/$cdir/subfinder2.txtls | grep -oP '^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}' | anew >> all.txtls
 
